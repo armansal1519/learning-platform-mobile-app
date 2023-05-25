@@ -1,15 +1,12 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_v11/services/pb/question.pb.dart';
-import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
+import 'package:mobile_v11/random.dart';
+import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 import 'package:mobile_v11/services/pb/submit.pbgrpc.dart';
 
 import '../globals.dart';
-import '../services/pb/lesson.pbgrpc.dart';
 
 enum QuestionStatus { submit, right, wrong }
 
@@ -18,7 +15,13 @@ class QuestionsWidget extends StatefulWidget {
 
   String lessonId;
 
-  QuestionsWidget({Key? key, required this.questions, required this.lessonId})
+  String overallSubject;
+
+  QuestionsWidget(
+      {Key? key,
+      required this.questions,
+      required this.lessonId,
+      required this.overallSubject})
       : super(key: key);
 
   @override
@@ -31,6 +34,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
   List<int> wrongIndexes = [];
   List<String> selectedAnswers = ["default"];
   List<QuestionStatus> status = [QuestionStatus.submit];
+  List<bool> hasSubmit = [false];
 
   late ClientChannel _channel;
   late SubmitServiceClient _submitStub;
@@ -92,28 +96,29 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
     );
     if (status[index] == QuestionStatus.right) {
       selectedAnswers.add("default");
+      hasSubmit.add(false);
+
       status.add(QuestionStatus.submit);
 
-      SubmitQuestionRequest req=SubmitQuestionRequest();
-      req.isCorrect=true;
-      req.questionId=widget.questions[index].id;
-      req.secondsToSubmit=10;
+      SubmitQuestionRequest req = SubmitQuestionRequest();
+      req.isCorrect = true;
+      req.questionId = widget.questions[index].id;
+      req.secondsToSubmit = 10;
       _submitStub.submitQuestion(req);
 
       setState(() {
         index++;
       });
-
-
     } else if (status[index] == QuestionStatus.wrong) {
       selectedAnswers.add("default");
+      hasSubmit.add(false);
       status.add(QuestionStatus.submit);
       wrongIndexes.add(index);
 
-      SubmitQuestionRequest req=SubmitQuestionRequest();
-      req.isCorrect=false;
-      req.questionId=widget.questions[index].id;
-      req.secondsToSubmit=10;
+      SubmitQuestionRequest req = SubmitQuestionRequest();
+      req.isCorrect = false;
+      req.questionId = widget.questions[index].id;
+      req.secondsToSubmit = 10;
       _submitStub.submitQuestion(req);
 
       setState(() {
@@ -129,27 +134,37 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
         } else {
           status[index] = QuestionStatus.wrong;
         }
+        hasSubmit[index] = true;
       });
     }
   }
 
   Widget onTapSubmitText() {
     if (status[index] == QuestionStatus.right) {
-      return const Text("بعدی");
+      return const Text(
+        "بعدی",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     } else if (status[index] == QuestionStatus.wrong) {
-      return const Text("بعدی");
+      return const Text(
+        "بعدی",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     } else {
-      return const Text("ارسال");
+      return const Text(
+        "ارسال",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     }
   }
 
-  Color onTapSubmitColor() {
+  List<Color> onTapSubmitColor() {
     if (status[index] == QuestionStatus.right) {
-      return Colors.green;
+      return [Colors.green, Colors.green.shade700];
     } else if (status[index] == QuestionStatus.wrong) {
-      return Colors.red;
+      return [Colors.red, Colors.red.shade700];
     } else {
-      return Theme.of(context).primaryColor;
+      return getColor(widget.overallSubject);
     }
   }
 
@@ -173,8 +188,7 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
       );
     } else if (status[index] == QuestionStatus.wrong) {
       return Column(
-
-        children:  [
+        children: [
           // const Icon(
           //   Icons.close,
           //   color: Colors.red,
@@ -183,13 +197,10 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
           const SizedBox(
             width: 8,
           ),
-          SingleChildScrollView(
-            child: AutoSizeText(
-               "جواب درست: \n${widget.questions[index].metadata.rightAnswer} " ,
-              style: const TextStyle( fontSize: 18),
-              minFontSize: 14,
-              maxLines: 3,
-            ),
+
+          Text(
+            "جواب درست: \n${widget.questions[index].metadata.rightAnswer} ",
+            style: const TextStyle(fontSize: 20),
           ),
         ],
       );
@@ -202,7 +213,8 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
     if (showFinishScreen) {
       return FinishWidget(
         percent: (((widget.questions.length - wrongIndexes.length) /
-                widget.questions.length)*100)
+                    widget.questions.length) *
+                100)
             .round(),
         lessonId: widget.lessonId,
       );
@@ -244,26 +256,44 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
         ),
         Column(
           children: [
-            for (var choice in widget.questions[index].metadata.choices)
-              Choice(
-                answer: choice,
-                callback: callback,
-                isSelected: choice == selectedAnswers[index],
-                isRightAnswer: choice== widget.questions[index].metadata.rightAnswer,
-                userTapSubmit: selectedAnswers[index]!="default",
-              ),
-            SizedBox(
-              height: 64,
-              child: answeredText(),
+            ListView(
+              shrinkWrap: true,
+              children: [
+                for (var choice in widget.questions[index].metadata.choices)
+                  Choice(
+                    answer: choice,
+                    callback: callback,
+                    isSelected: choice == selectedAnswers[index],
+                    isRightAnswer:
+                        choice == widget.questions[index].metadata.rightAnswer,
+                    userTapSubmit: hasSubmit[index],
+                    overallSubject: widget.overallSubject,
+                  ),
+                // answeredText(),
+                const SizedBox(
+                  height: 40,
+                )
+              ],
             ),
             SizedBox(
-              width: double.infinity,
               height: 52,
-              child: ElevatedButton(
-                onPressed: onTapSubmit,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: onTapSubmitColor()),
-                child: onTapSubmitText(),
+              width: double.infinity,
+              child: InkWell(
+                onTap: onTapSubmit,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: onTapSubmitColor(),
+                      stops: const [0, 1],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Center(
+                    child: onTapSubmitText(),
+                  ),
+                ),
               ),
             ),
           ],
@@ -284,15 +314,17 @@ class Choice extends StatefulWidget {
 
   bool userTapSubmit;
 
-  Choice(
-      {Key? key,
-      required this.answer,
-      required this.callback,
-      required this.isSelected,
-      required this.isRightAnswer,
-        required this.userTapSubmit,
-      })
-      : super(key: key);
+  String overallSubject;
+
+  Choice({
+    Key? key,
+    required this.answer,
+    required this.callback,
+    required this.isSelected,
+    required this.isRightAnswer,
+    required this.userTapSubmit,
+    required this.overallSubject,
+  }) : super(key: key);
 
   @override
   State<Choice> createState() => _ChoiceState();
@@ -301,21 +333,71 @@ class Choice extends StatefulWidget {
 class _ChoiceState extends State<Choice> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isSelected) {
+    Color color = getTextColor(widget.overallSubject)[1];
+
+    if (widget.userTapSubmit && widget.isSelected && widget.isRightAnswer) {
       return Container(
         width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         child: ElevatedButton(
           onPressed: () {
             widget.callback(widget.answer);
           },
-          child: Text(widget.answer),
+          style:
+              ElevatedButton.styleFrom(backgroundColor: Colors.green.shade500),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (widget.userTapSubmit && widget.isSelected) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        child: ElevatedButton(
+          onPressed: () {
+            widget.callback(widget.answer);
+          },
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red.shade500),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (widget.isSelected) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        child: ElevatedButton(
+          onPressed: () {
+            widget.callback(widget.answer);
+          },
+          style: ElevatedButton.styleFrom(backgroundColor: color),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
         ),
       );
     } else {
-      if(widget.isSelected && widget.isRightAnswer){
+      if (widget.isSelected && widget.isRightAnswer) {
         print(widget.isSelected && widget.isRightAnswer);
         return Container(
-          
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
@@ -325,23 +407,30 @@ class _ChoiceState extends State<Choice> {
             child: Text(widget.answer),
           ),
         );
-      }else{
+      } else {
         return Container(
           width: double.infinity,
+          padding: EdgeInsets.all(4),
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 2, color: Theme.of(context).primaryColor),
+              side: BorderSide(width: 2, color: color),
             ),
             onPressed: () {
+              if (widget.userTapSubmit) {
+                return;
+              }
               widget.callback(widget.answer);
             },
-            child: Text(widget.answer),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                widget.answer,
+                style: TextStyle(color: color, fontSize: 20),
+              ),
+            ),
           ),
         );
-
       }
-
-
     }
   }
 }

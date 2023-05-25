@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grpc/grpc.dart';
 
 import '../../components/SearchBarWidget.dart';
 import '../../components/newCourseCardWidget.dart';
-import '../../components/smallBadgeWidget.dart';
 import '../../globals.dart';
 import '../../layout.dart';
 import '../../services/pb/course.pbgrpc.dart';

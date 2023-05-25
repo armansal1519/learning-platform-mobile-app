@@ -42,7 +42,7 @@ dependencies:
 #  flutter_html: ^2.2.1
   html: ^0.15.2
   font_awesome_flutter: ^10.4.0
-  fl_chart: ^0.62.0
+#  fl_chart: ^0.62.0
 
 
 

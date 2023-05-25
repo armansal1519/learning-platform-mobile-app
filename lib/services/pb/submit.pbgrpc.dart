@@ -10,36 +10,36 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'submit.pb.dart' as $13;
+import 'submit.pb.dart' as $15;
 export 'submit.pb.dart';
 
 class SubmitServiceClient extends $grpc.Client {
   static final _$submitQuestion =
-      $grpc.ClientMethod<$13.SubmitQuestionRequest, $13.SubmitQuestionResponse>(
+      $grpc.ClientMethod<$15.SubmitQuestionRequest, $15.SubmitQuestionResponse>(
           '/pb.SubmitService/SubmitQuestion',
-          ($13.SubmitQuestionRequest value) => value.writeToBuffer(),
+          ($15.SubmitQuestionRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $13.SubmitQuestionResponse.fromBuffer(value));
+              $15.SubmitQuestionResponse.fromBuffer(value));
   static final _$finishLesson =
-      $grpc.ClientMethod<$13.FinishLessonRequest, $13.FinishLessonResponse>(
+      $grpc.ClientMethod<$15.FinishLessonRequest, $15.FinishLessonResponse>(
           '/pb.SubmitService/FinishLesson',
-          ($13.FinishLessonRequest value) => value.writeToBuffer(),
+          ($15.FinishLessonRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $13.FinishLessonResponse.fromBuffer(value));
+              $15.FinishLessonResponse.fromBuffer(value));
 
   SubmitServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$13.SubmitQuestionResponse> submitQuestion(
-      $13.SubmitQuestionRequest request,
+  $grpc.ResponseFuture<$15.SubmitQuestionResponse> submitQuestion(
+      $15.SubmitQuestionRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$submitQuestion, request, options: options);
   }
 
-  $grpc.ResponseFuture<$13.FinishLessonResponse> finishLesson(
-      $13.FinishLessonRequest request,
+  $grpc.ResponseFuture<$15.FinishLessonResponse> finishLesson(
+      $15.FinishLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$finishLesson, request, options: options);
   }
@@ -49,40 +49,40 @@ abstract class SubmitServiceBase extends $grpc.Service {
   $core.String get $name => 'pb.SubmitService';
 
   SubmitServiceBase() {
-    $addMethod($grpc.ServiceMethod<$13.SubmitQuestionRequest,
-            $13.SubmitQuestionResponse>(
+    $addMethod($grpc.ServiceMethod<$15.SubmitQuestionRequest,
+            $15.SubmitQuestionResponse>(
         'SubmitQuestion',
         submitQuestion_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $13.SubmitQuestionRequest.fromBuffer(value),
-        ($13.SubmitQuestionResponse value) => value.writeToBuffer()));
+            $15.SubmitQuestionRequest.fromBuffer(value),
+        ($15.SubmitQuestionResponse value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$13.FinishLessonRequest, $13.FinishLessonResponse>(
+        $grpc.ServiceMethod<$15.FinishLessonRequest, $15.FinishLessonResponse>(
             'FinishLesson',
             finishLesson_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
-                $13.FinishLessonRequest.fromBuffer(value),
-            ($13.FinishLessonResponse value) => value.writeToBuffer()));
+                $15.FinishLessonRequest.fromBuffer(value),
+            ($15.FinishLessonResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$13.SubmitQuestionResponse> submitQuestion_Pre(
+  $async.Future<$15.SubmitQuestionResponse> submitQuestion_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$13.SubmitQuestionRequest> request) async {
+      $async.Future<$15.SubmitQuestionRequest> request) async {
     return submitQuestion(call, await request);
   }
 
-  $async.Future<$13.FinishLessonResponse> finishLesson_Pre(
+  $async.Future<$15.FinishLessonResponse> finishLesson_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$13.FinishLessonRequest> request) async {
+      $async.Future<$15.FinishLessonRequest> request) async {
     return finishLesson(call, await request);
   }
 
-  $async.Future<$13.SubmitQuestionResponse> submitQuestion(
-      $grpc.ServiceCall call, $13.SubmitQuestionRequest request);
-  $async.Future<$13.FinishLessonResponse> finishLesson(
-      $grpc.ServiceCall call, $13.FinishLessonRequest request);
+  $async.Future<$15.SubmitQuestionResponse> submitQuestion(
+      $grpc.ServiceCall call, $15.SubmitQuestionRequest request);
+  $async.Future<$15.FinishLessonResponse> finishLesson(
+      $grpc.ServiceCall call, $15.FinishLessonRequest request);
 }

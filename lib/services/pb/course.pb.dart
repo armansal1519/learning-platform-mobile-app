@@ -10,8 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'unit.pb.dart' as $7;
-import 'syllabus.pb.dart' as $8;
+import 'unit.pb.dart' as $5;
+import 'syllabus.pb.dart' as $6;
 import 'instructor.pb.dart' as $0;
 
 import 'course.pbenum.dart';
@@ -33,12 +33,13 @@ class Course extends $pb.GeneratedMessage {
     ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finishEstimation', $pb.PbFieldType.O3)
     ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finishEstimationUnit')
     ..aInt64(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
-    ..pc<$7.Unit>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'units', $pb.PbFieldType.PM, subBuilder: $7.Unit.create)
+    ..pc<$5.Unit>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'units', $pb.PbFieldType.PM, subBuilder: $5.Unit.create)
     ..pPS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'PrerequisiteIds', protoName: 'PrerequisiteIds')
-    ..pc<$8.Syllabus>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'syllabuses', $pb.PbFieldType.PM, subBuilder: $8.Syllabus.create)
+    ..pc<$6.Syllabus>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'syllabuses', $pb.PbFieldType.PM, subBuilder: $6.Syllabus.create)
     ..pc<Course>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Prerequisite', $pb.PbFieldType.PM, protoName: 'Prerequisite', subBuilder: Course.create)
     ..aOM<$0.Instructor>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'instructor', subBuilder: $0.Instructor.create)
     ..pPS(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skills')
+    ..aOS(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'overallSubject')
     ..hasRequiredFields = false
   ;
 
@@ -57,12 +58,13 @@ class Course extends $pb.GeneratedMessage {
     $core.int? finishEstimation,
     $core.String? finishEstimationUnit,
     $fixnum.Int64? createdAt,
-    $core.Iterable<$7.Unit>? units,
+    $core.Iterable<$5.Unit>? units,
     $core.Iterable<$core.String>? prerequisiteIds,
-    $core.Iterable<$8.Syllabus>? syllabuses,
+    $core.Iterable<$6.Syllabus>? syllabuses,
     $core.Iterable<Course>? prerequisite,
     $0.Instructor? instructor,
     $core.Iterable<$core.String>? skills,
+    $core.String? overallSubject,
   }) {
     final _result = create();
     if (id != null) {
@@ -121,6 +123,9 @@ class Course extends $pb.GeneratedMessage {
     }
     if (skills != null) {
       _result.skills.addAll(skills);
+    }
+    if (overallSubject != null) {
+      _result.overallSubject = overallSubject;
     }
     return _result;
   }
@@ -257,13 +262,13 @@ class Course extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(13);
 
   @$pb.TagNumber(14)
-  $core.List<$7.Unit> get units => $_getList(13);
+  $core.List<$5.Unit> get units => $_getList(13);
 
   @$pb.TagNumber(15)
   $core.List<$core.String> get prerequisiteIds => $_getList(14);
 
   @$pb.TagNumber(16)
-  $core.List<$8.Syllabus> get syllabuses => $_getList(15);
+  $core.List<$6.Syllabus> get syllabuses => $_getList(15);
 
   @$pb.TagNumber(17)
   $core.List<Course> get prerequisite => $_getList(16);
@@ -281,6 +286,15 @@ class Course extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(19)
   $core.List<$core.String> get skills => $_getList(18);
+
+  @$pb.TagNumber(20)
+  $core.String get overallSubject => $_getSZ(19);
+  @$pb.TagNumber(20)
+  set overallSubject($core.String v) { $_setString(19, v); }
+  @$pb.TagNumber(20)
+  $core.bool hasOverallSubject() => $_has(19);
+  @$pb.TagNumber(20)
+  void clearOverallSubject() => clearField(20);
 }
 
 class CreateCourseRequest extends $pb.GeneratedMessage {
@@ -430,13 +444,13 @@ class UpdateCourseRequest extends $pb.GeneratedMessage {
 
 class DeleteCourseRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteCourseRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..hasRequiredFields = false
   ;
 
   DeleteCourseRequest._() : super();
   factory DeleteCourseRequest({
-    $fixnum.Int64? id,
+    $core.String? id,
   }) {
     final _result = create();
     if (id != null) {
@@ -466,9 +480,9 @@ class DeleteCourseRequest extends $pb.GeneratedMessage {
   static DeleteCourseRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get id => $_getI64(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($fixnum.Int64 v) { $_setInt64(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)

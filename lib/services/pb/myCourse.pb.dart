@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'course.pb.dart' as $9;
+import 'course.pb.dart' as $7;
 
 import 'myCourse.pbenum.dart';
 
@@ -21,7 +21,7 @@ class MyCourse extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'overallProgress', $pb.PbFieldType.O3)
     ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
-    ..aOM<$9.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Course', protoName: 'Course', subBuilder: $9.Course.create)
+    ..aOM<$7.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Course', protoName: 'Course', subBuilder: $7.Course.create)
     ..hasRequiredFields = false
   ;
 
@@ -30,7 +30,7 @@ class MyCourse extends $pb.GeneratedMessage {
     $core.String? id,
     $core.int? overallProgress,
     $fixnum.Int64? createdAt,
-    $9.Course? course,
+    $7.Course? course,
   }) {
     final _result = create();
     if (id != null) {
@@ -96,15 +96,15 @@ class MyCourse extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(3);
 
   @$pb.TagNumber(4)
-  $9.Course get course => $_getN(3);
+  $7.Course get course => $_getN(3);
   @$pb.TagNumber(4)
-  set course($9.Course v) { setField(4, v); }
+  set course($7.Course v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasCourse() => $_has(3);
   @$pb.TagNumber(4)
   void clearCourse() => clearField(4);
   @$pb.TagNumber(4)
-  $9.Course ensureCourse() => $_ensure(3);
+  $7.Course ensureCourse() => $_ensure(3);
 }
 
 class CreateMyCourseRequest extends $pb.GeneratedMessage {

@@ -10,6 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'course.pb.dart' as $7;
+
 import 'user.pbenum.dart';
 
 export 'user.pbenum.dart';
@@ -21,8 +23,12 @@ class User extends $pb.GeneratedMessage {
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firstName')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastName')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profileImage')
-    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
-    ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isTemp')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coins', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'xp', $pb.PbFieldType.O3)
+    ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isTemp')
+    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finishedLessons', $pb.PbFieldType.O3)
+    ..pc<UserStreak>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'usersStreaks', $pb.PbFieldType.PM, subBuilder: UserStreak.create)
+    ..aInt64(78, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
     ..hasRequiredFields = false
   ;
 
@@ -33,8 +39,12 @@ class User extends $pb.GeneratedMessage {
     $core.String? firstName,
     $core.String? lastName,
     $core.String? profileImage,
-    $fixnum.Int64? createdAt,
+    $core.int? coins,
+    $core.int? xp,
     $core.bool? isTemp,
+    $core.int? finishedLessons,
+    $core.Iterable<UserStreak>? usersStreaks,
+    $fixnum.Int64? createdAt,
   }) {
     final _result = create();
     if (id != null) {
@@ -52,11 +62,23 @@ class User extends $pb.GeneratedMessage {
     if (profileImage != null) {
       _result.profileImage = profileImage;
     }
-    if (createdAt != null) {
-      _result.createdAt = createdAt;
+    if (coins != null) {
+      _result.coins = coins;
+    }
+    if (xp != null) {
+      _result.xp = xp;
     }
     if (isTemp != null) {
       _result.isTemp = isTemp;
+    }
+    if (finishedLessons != null) {
+      _result.finishedLessons = finishedLessons;
+    }
+    if (usersStreaks != null) {
+      _result.usersStreaks.addAll(usersStreaks);
+    }
+    if (createdAt != null) {
+      _result.createdAt = createdAt;
     }
     return _result;
   }
@@ -127,22 +149,127 @@ class User extends $pb.GeneratedMessage {
   void clearProfileImage() => clearField(5);
 
   @$pb.TagNumber(6)
-  $fixnum.Int64 get createdAt => $_getI64(5);
+  $core.int get coins => $_getIZ(5);
   @$pb.TagNumber(6)
-  set createdAt($fixnum.Int64 v) { $_setInt64(5, v); }
+  set coins($core.int v) { $_setSignedInt32(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasCreatedAt() => $_has(5);
+  $core.bool hasCoins() => $_has(5);
   @$pb.TagNumber(6)
-  void clearCreatedAt() => clearField(6);
+  void clearCoins() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.bool get isTemp => $_getBF(6);
+  $core.int get xp => $_getIZ(6);
   @$pb.TagNumber(7)
-  set isTemp($core.bool v) { $_setBool(6, v); }
+  set xp($core.int v) { $_setSignedInt32(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasIsTemp() => $_has(6);
+  $core.bool hasXp() => $_has(6);
   @$pb.TagNumber(7)
-  void clearIsTemp() => clearField(7);
+  void clearXp() => clearField(7);
+
+  @$pb.TagNumber(9)
+  $core.bool get isTemp => $_getBF(7);
+  @$pb.TagNumber(9)
+  set isTemp($core.bool v) { $_setBool(7, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasIsTemp() => $_has(7);
+  @$pb.TagNumber(9)
+  void clearIsTemp() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get finishedLessons => $_getIZ(8);
+  @$pb.TagNumber(10)
+  set finishedLessons($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasFinishedLessons() => $_has(8);
+  @$pb.TagNumber(10)
+  void clearFinishedLessons() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.List<UserStreak> get usersStreaks => $_getList(9);
+
+  @$pb.TagNumber(78)
+  $fixnum.Int64 get createdAt => $_getI64(10);
+  @$pb.TagNumber(78)
+  set createdAt($fixnum.Int64 v) { $_setInt64(10, v); }
+  @$pb.TagNumber(78)
+  $core.bool hasCreatedAt() => $_has(10);
+  @$pb.TagNumber(78)
+  void clearCreatedAt() => clearField(78);
+}
+
+class Streak extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Streak', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.O3)
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasStreakUntil')
+    ..hasRequiredFields = false
+  ;
+
+  Streak._() : super();
+  factory Streak({
+    $core.String? id,
+    $core.int? count,
+    $fixnum.Int64? hasStreakUntil,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (count != null) {
+      _result.count = count;
+    }
+    if (hasStreakUntil != null) {
+      _result.hasStreakUntil = hasStreakUntil;
+    }
+    return _result;
+  }
+  factory Streak.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Streak.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Streak clone() => Streak()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Streak copyWith(void Function(Streak) updates) => super.copyWith((message) => updates(message as Streak)) as Streak; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Streak create() => Streak._();
+  Streak createEmptyInstance() => create();
+  static $pb.PbList<Streak> createRepeated() => $pb.PbList<Streak>();
+  @$core.pragma('dart2js:noInline')
+  static Streak getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Streak>(create);
+  static Streak? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get count => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set count($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCount() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCount() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get hasStreakUntil => $_getI64(2);
+  @$pb.TagNumber(3)
+  set hasStreakUntil($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHasStreakUntil() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHasStreakUntil() => clearField(3);
 }
 
 class UserParameters extends $pb.GeneratedMessage {
@@ -204,6 +331,71 @@ class UserParameters extends $pb.GeneratedMessage {
   $core.bool hasRating() => $_has(1);
   @$pb.TagNumber(2)
   void clearRating() => clearField(2);
+}
+
+class UserStreak extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserStreak', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
+    ..aOM<$7.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'course', subBuilder: $7.Course.create)
+    ..aOM<Streak>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'streak', subBuilder: Streak.create)
+    ..hasRequiredFields = false
+  ;
+
+  UserStreak._() : super();
+  factory UserStreak({
+    $7.Course? course,
+    Streak? streak,
+  }) {
+    final _result = create();
+    if (course != null) {
+      _result.course = course;
+    }
+    if (streak != null) {
+      _result.streak = streak;
+    }
+    return _result;
+  }
+  factory UserStreak.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserStreak.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserStreak clone() => UserStreak()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserStreak copyWith(void Function(UserStreak) updates) => super.copyWith((message) => updates(message as UserStreak)) as UserStreak; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserStreak create() => UserStreak._();
+  UserStreak createEmptyInstance() => create();
+  static $pb.PbList<UserStreak> createRepeated() => $pb.PbList<UserStreak>();
+  @$core.pragma('dart2js:noInline')
+  static UserStreak getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserStreak>(create);
+  static UserStreak? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $7.Course get course => $_getN(0);
+  @$pb.TagNumber(1)
+  set course($7.Course v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCourse() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCourse() => clearField(1);
+  @$pb.TagNumber(1)
+  $7.Course ensureCourse() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  Streak get streak => $_getN(1);
+  @$pb.TagNumber(2)
+  set streak(Streak v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStreak() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStreak() => clearField(2);
+  @$pb.TagNumber(2)
+  Streak ensureStreak() => $_ensure(1);
 }
 
 class CreateUserRequest extends $pb.GeneratedMessage {

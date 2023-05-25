@@ -31,11 +31,12 @@ const Course$json = const {
     const {'1': 'Prerequisite', '3': 17, '4': 3, '5': 11, '6': '.pb.Course', '10': 'Prerequisite'},
     const {'1': 'instructor', '3': 18, '4': 1, '5': 11, '6': '.pb.Instructor', '10': 'instructor'},
     const {'1': 'skills', '3': 19, '4': 3, '5': 9, '10': 'skills'},
+    const {'1': 'overall_subject', '3': 20, '4': 1, '5': 9, '10': 'overallSubject'},
   ],
 };
 
 /// Descriptor for `Course`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKAlSAmlkEhQKBXRpdGxlGAIgASgJUgV0aXRsZRIWCgZpbWFnZXMYAyADKAlSBmltYWdlcxIdCgpzaG9ydF9kZXNjGAQgASgJUglzaG9ydERlc2MSGwoJZnVsbF9kZXNjGAUgASgJUghmdWxsRGVzYxIWCgZyYXRpbmcYBiABKAJSBnJhdGluZxIUCgVsZXZlbBgHIAEoCVIFbGV2ZWwSFAoFcHJpY2UYCCABKANSBXByaWNlEhgKB3ByaWNpbmcYCSABKAlSB3ByaWNpbmcSJwoPbnVtYmVyX2Vucm9sbGVkGAogASgFUg5udW1iZXJFbnJvbGxlZBIrChFmaW5pc2hfZXN0aW1hdGlvbhgLIAEoBVIQZmluaXNoRXN0aW1hdGlvbhI0ChZmaW5pc2hfZXN0aW1hdGlvbl91bml0GAwgASgJUhRmaW5pc2hFc3RpbWF0aW9uVW5pdBIdCgpjcmVhdGVkX2F0GA0gASgDUgljcmVhdGVkQXQSHgoFdW5pdHMYDiADKAsyCC5wYi5Vbml0UgV1bml0cxIoCg9QcmVyZXF1aXNpdGVJZHMYDyADKAlSD1ByZXJlcXVpc2l0ZUlkcxIsCgpzeWxsYWJ1c2VzGBAgAygLMgwucGIuU3lsbGFidXNSCnN5bGxhYnVzZXMSLgoMUHJlcmVxdWlzaXRlGBEgAygLMgoucGIuQ291cnNlUgxQcmVyZXF1aXNpdGUSLgoKaW5zdHJ1Y3RvchgSIAEoCzIOLnBiLkluc3RydWN0b3JSCmluc3RydWN0b3ISFgoGc2tpbGxzGBMgAygJUgZza2lsbHM=');
+final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKAlSAmlkEhQKBXRpdGxlGAIgASgJUgV0aXRsZRIWCgZpbWFnZXMYAyADKAlSBmltYWdlcxIdCgpzaG9ydF9kZXNjGAQgASgJUglzaG9ydERlc2MSGwoJZnVsbF9kZXNjGAUgASgJUghmdWxsRGVzYxIWCgZyYXRpbmcYBiABKAJSBnJhdGluZxIUCgVsZXZlbBgHIAEoCVIFbGV2ZWwSFAoFcHJpY2UYCCABKANSBXByaWNlEhgKB3ByaWNpbmcYCSABKAlSB3ByaWNpbmcSJwoPbnVtYmVyX2Vucm9sbGVkGAogASgFUg5udW1iZXJFbnJvbGxlZBIrChFmaW5pc2hfZXN0aW1hdGlvbhgLIAEoBVIQZmluaXNoRXN0aW1hdGlvbhI0ChZmaW5pc2hfZXN0aW1hdGlvbl91bml0GAwgASgJUhRmaW5pc2hFc3RpbWF0aW9uVW5pdBIdCgpjcmVhdGVkX2F0GA0gASgDUgljcmVhdGVkQXQSHgoFdW5pdHMYDiADKAsyCC5wYi5Vbml0UgV1bml0cxIoCg9QcmVyZXF1aXNpdGVJZHMYDyADKAlSD1ByZXJlcXVpc2l0ZUlkcxIsCgpzeWxsYWJ1c2VzGBAgAygLMgwucGIuU3lsbGFidXNSCnN5bGxhYnVzZXMSLgoMUHJlcmVxdWlzaXRlGBEgAygLMgoucGIuQ291cnNlUgxQcmVyZXF1aXNpdGUSLgoKaW5zdHJ1Y3RvchgSIAEoCzIOLnBiLkluc3RydWN0b3JSCmluc3RydWN0b3ISFgoGc2tpbGxzGBMgAygJUgZza2lsbHMSJwoPb3ZlcmFsbF9zdWJqZWN0GBQgASgJUg5vdmVyYWxsU3ViamVjdA==');
 @$core.Deprecated('Use createCourseRequestDescriptor instead')
 const CreateCourseRequest$json = const {
   '1': 'CreateCourseRequest',
@@ -70,12 +71,12 @@ final $typed_data.Uint8List updateCourseRequestDescriptor = $convert.base64Decod
 const DeleteCourseRequest$json = const {
   '1': 'DeleteCourseRequest',
   '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
   ],
 };
 
 /// Descriptor for `DeleteCourseRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteCourseRequestDescriptor = $convert.base64Decode('ChNEZWxldGVDb3Vyc2VSZXF1ZXN0Eg4KAmlkGAEgASgDUgJpZA==');
+final $typed_data.Uint8List deleteCourseRequestDescriptor = $convert.base64Decode('ChNEZWxldGVDb3Vyc2VSZXF1ZXN0Eg4KAmlkGAEgASgJUgJpZA==');
 @$core.Deprecated('Use listCourseRequestDescriptor instead')
 const ListCourseRequest$json = const {
   '1': 'ListCourseRequest',

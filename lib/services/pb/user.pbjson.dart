@@ -17,13 +17,29 @@ const User$json = const {
     const {'1': 'first_name', '3': 3, '4': 1, '5': 9, '10': 'firstName'},
     const {'1': 'last_name', '3': 4, '4': 1, '5': 9, '10': 'lastName'},
     const {'1': 'profile_image', '3': 5, '4': 1, '5': 9, '10': 'profileImage'},
-    const {'1': 'created_at', '3': 6, '4': 1, '5': 3, '10': 'createdAt'},
-    const {'1': 'is_temp', '3': 7, '4': 1, '5': 8, '10': 'isTemp'},
+    const {'1': 'coins', '3': 6, '4': 1, '5': 5, '10': 'coins'},
+    const {'1': 'xp', '3': 7, '4': 1, '5': 5, '10': 'xp'},
+    const {'1': 'created_at', '3': 78, '4': 1, '5': 3, '10': 'createdAt'},
+    const {'1': 'is_temp', '3': 9, '4': 1, '5': 8, '10': 'isTemp'},
+    const {'1': 'finished_lessons', '3': 10, '4': 1, '5': 5, '10': 'finishedLessons'},
+    const {'1': 'users_streaks', '3': 11, '4': 3, '5': 11, '6': '.pb.UserStreak', '10': 'usersStreaks'},
   ],
 };
 
 /// Descriptor for `User`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEg4KAmlkGAEgASgJUgJpZBIhCgxwaG9uZV9udW1iZXIYAiABKAlSC3Bob25lTnVtYmVyEh0KCmZpcnN0X25hbWUYAyABKAlSCWZpcnN0TmFtZRIbCglsYXN0X25hbWUYBCABKAlSCGxhc3ROYW1lEiMKDXByb2ZpbGVfaW1hZ2UYBSABKAlSDHByb2ZpbGVJbWFnZRIdCgpjcmVhdGVkX2F0GAYgASgDUgljcmVhdGVkQXQSFwoHaXNfdGVtcBgHIAEoCFIGaXNUZW1w');
+final $typed_data.Uint8List userDescriptor = $convert.base64Decode('CgRVc2VyEg4KAmlkGAEgASgJUgJpZBIhCgxwaG9uZV9udW1iZXIYAiABKAlSC3Bob25lTnVtYmVyEh0KCmZpcnN0X25hbWUYAyABKAlSCWZpcnN0TmFtZRIbCglsYXN0X25hbWUYBCABKAlSCGxhc3ROYW1lEiMKDXByb2ZpbGVfaW1hZ2UYBSABKAlSDHByb2ZpbGVJbWFnZRIUCgVjb2lucxgGIAEoBVIFY29pbnMSDgoCeHAYByABKAVSAnhwEh0KCmNyZWF0ZWRfYXQYTiABKANSCWNyZWF0ZWRBdBIXCgdpc190ZW1wGAkgASgIUgZpc1RlbXASKQoQZmluaXNoZWRfbGVzc29ucxgKIAEoBVIPZmluaXNoZWRMZXNzb25zEjMKDXVzZXJzX3N0cmVha3MYCyADKAsyDi5wYi5Vc2VyU3RyZWFrUgx1c2Vyc1N0cmVha3M=');
+@$core.Deprecated('Use streakDescriptor instead')
+const Streak$json = const {
+  '1': 'Streak',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'count', '3': 2, '4': 1, '5': 5, '10': 'count'},
+    const {'1': 'has_streak_until', '3': 3, '4': 1, '5': 3, '10': 'hasStreakUntil'},
+  ],
+};
+
+/// Descriptor for `Streak`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streakDescriptor = $convert.base64Decode('CgZTdHJlYWsSDgoCaWQYASABKAlSAmlkEhQKBWNvdW50GAIgASgFUgVjb3VudBIoChBoYXNfc3RyZWFrX3VudGlsGAMgASgDUg5oYXNTdHJlYWtVbnRpbA==');
 @$core.Deprecated('Use userParametersDescriptor instead')
 const UserParameters$json = const {
   '1': 'UserParameters',
@@ -35,6 +51,17 @@ const UserParameters$json = const {
 
 /// Descriptor for `UserParameters`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List userParametersDescriptor = $convert.base64Decode('Cg5Vc2VyUGFyYW1ldGVycxISCgRuYW1lGAEgASgJUgRuYW1lEhYKBnJhdGluZxgCIAEoBVIGcmF0aW5n');
+@$core.Deprecated('Use userStreakDescriptor instead')
+const UserStreak$json = const {
+  '1': 'UserStreak',
+  '2': const [
+    const {'1': 'course', '3': 1, '4': 1, '5': 11, '6': '.pb.Course', '10': 'course'},
+    const {'1': 'streak', '3': 2, '4': 1, '5': 11, '6': '.pb.Streak', '10': 'streak'},
+  ],
+};
+
+/// Descriptor for `UserStreak`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userStreakDescriptor = $convert.base64Decode('CgpVc2VyU3RyZWFrEiIKBmNvdXJzZRgBIAEoCzIKLnBiLkNvdXJzZVIGY291cnNlEiIKBnN0cmVhaxgCIAEoCzIKLnBiLlN0cmVha1IGc3RyZWFr');
 @$core.Deprecated('Use createUserRequestDescriptor instead')
 const CreateUserRequest$json = const {
   '1': 'CreateUserRequest',

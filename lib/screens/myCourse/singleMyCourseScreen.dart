@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grpc/grpc.dart';
-import 'package:flutter/material.dart';
 import 'package:mobile_v11/globals.dart';
-import 'package:mobile_v11/screens/Auth/authScreen.dart';
+import 'package:mobile_v11/random.dart';
 import 'package:mobile_v11/services/pb/myCourse.pbgrpc.dart';
 
 import '../../components/myUnitWidget.dart';
@@ -50,7 +48,6 @@ class _SingleMyCourseScreenState extends State<SingleMyCourseScreen> {
           setState(() {
             myCourse = res;
           })
-
         });
 
     // print(course);
@@ -65,82 +62,129 @@ class _SingleMyCourseScreenState extends State<SingleMyCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if(box.read('isAuth')==null || box.read('isAuth')==false){
-    //   return const AuthScreen();
-    // }
+    AppBar getAppBar() {
+      return AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
+        foregroundColor: Theme.of(context).primaryColorDark,
+      );
+    }
 
-
+    final myCourse = this.myCourse;
     if (myCourse != null) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: getAppBar(),
         body: Container(
           padding: const EdgeInsets.all(8),
           width: double.infinity,
-          child: ListView(
+          child: Column(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.network(
-                    myCourse!.course.images[0],
-                    height: 240,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    myCourse!.course.title,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Text(
-                      myCourse!.course.fullDesc,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: const [
-                      Text(
-                        "Units:",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Column(
+              Expanded(
+                child: ListView(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (var unit in myCourse!.course.units)
-                          MyUnitWidget(
-                            unit: unit,
-                            myCourseID: myCourse!.id,
-                          )
+                        Image.network(
+                          myCourse!.course.images[0],
+                          height: 240,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          myCourse!.course.title,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Text(
+                            myCourse!.course.fullDesc,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: const [
+                            Text(
+                              "Units:",
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Column(
+                            children: [
+                              for (var unit in myCourse!.course.units)
+                                MyUnitWidget(
+                                  unit: unit,
+                                  myCourseID: myCourse!.id,
+                                  overallSubject: myCourse.course.overallSubject,
+
+                                )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        )
                       ],
                     ),
-                  )
-                ],
+                    // SizedBox(
+                    //   height: 52,
+                    //   child: ElevatedButton(
+                    //     style: const ButtonStyle(),
+                    //     onPressed: () {},
+                    //     child: const Text("گرفتن درس"),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 8,
-              )
+              ),
+              SizedBox(
+                height: 52,
+                width: double.infinity,
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors:getColor(myCourse.course.overallSubject),
+                          stops: const [0, 1],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        "شروع",
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      ))),
+                ),
+              ),
             ],
           ),
         ),
+        // floatingActionButton: getFloutingButton(context),
       );
     } else {
       return Scaffold(
-          appBar: AppBar(),
+          appBar: getAppBar(),
           body: const Center(child: CircularProgressIndicator()));
     }
   }

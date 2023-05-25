@@ -1,16 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mobile_v11/services/pb/leitnerQuestion.pbgrpc.dart';
-import 'package:mobile_v11/services/pb/question.pb.dart';
-import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:mobile_v11/services/pb/submit.pbgrpc.dart';
+import 'package:mobile_v11/services/pb/leitnerQuestion.pbgrpc.dart';
+import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 
 import '../../globals.dart';
-import '../../services/pb/leitnerQuestion.pb.dart';
 
 enum QuestionStatus { submit, right, wrong }
 

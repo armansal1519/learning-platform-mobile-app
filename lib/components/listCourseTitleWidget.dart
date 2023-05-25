@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,8 +6,9 @@ class ListCourseTitleWidget extends StatelessWidget {
 
   final String link;
 
-  const ListCourseTitleWidget({Key? key,
-  required this.title,
+  const ListCourseTitleWidget({
+    Key? key,
+    required this.title,
     required this.link,
   }) : super(key: key);
 
@@ -17,11 +17,15 @@ class ListCourseTitleWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,style: TextStyle(fontSize: 18)),
-        TextButton(onPressed: (){
-          GoRouter.of(context)
-              .go('/course/search/sss');
-        }, child: Text("مشاهده بیشتر",style: TextStyle(fontSize: 14),))
+        Text(title, style: TextStyle(fontSize: 18)),
+        TextButton(
+            onPressed: () {
+              GoRouter.of(context).go('/course/search/sss');
+            },
+            child: Text(
+              "مشاهده بیشتر",
+              style: TextStyle(fontSize: 14),
+            ))
       ],
     );
   }

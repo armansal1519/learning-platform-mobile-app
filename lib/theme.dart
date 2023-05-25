@@ -25,6 +25,7 @@ ThemeData getTheme() {
       // primarySwatch: createMaterialColor(const Color.fromRGBO(51,199,138, 1.0)),
       primarySwatch: createMaterialColor(const Color.fromRGBO(57, 127, 243, 1.0)),
 
+
       primaryColorDark: const Color.fromRGBO(72, 69, 84, 1),
       fontFamily: "IranSans"
       //rgb(51,199,138)

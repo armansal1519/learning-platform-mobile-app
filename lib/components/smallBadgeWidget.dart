@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,14 +6,26 @@ import '../random.dart';
 class SmallBadgeWidget extends StatelessWidget {
   const SmallBadgeWidget({Key? key}) : super(key: key);
 
-  getMedalIcon(){
-    var t=DateTime.now().millisecond;
-    if( t%3==0)
-      return FaIcon(FontAwesomeIcons.medal,color: Colors.white,size: 40,);
-          else if(t%3==1){
-            return FaIcon(FontAwesomeIcons.trophy,color: Colors.white,size: 40,);
+  getMedalIcon() {
+    var t = DateTime.now().millisecond;
+    if (t % 3 == 0)
+      return FaIcon(
+        FontAwesomeIcons.medal,
+        color: Colors.white,
+        size: 40,
+      );
+    else if (t % 3 == 1) {
+      return FaIcon(
+        FontAwesomeIcons.trophy,
+        color: Colors.white,
+        size: 40,
+      );
     }
-   return  FaIcon(FontAwesomeIcons.award,color: Colors.white,size: 40,);
+    return FaIcon(
+      FontAwesomeIcons.award,
+      color: Colors.white,
+      size: 40,
+    );
   }
 
   @override
@@ -33,9 +44,7 @@ class SmallBadgeWidget extends StatelessWidget {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
-      child: Center(
-        child:getMedalIcon()
-      ),
+      child: Center(child: getMedalIcon()),
     );
   }
 }

@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'lesson.pb.dart' as $6;
+import 'lesson.pb.dart' as $4;
 
 import 'unit.pbenum.dart';
 
@@ -22,7 +22,7 @@ class Unit extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'desc')
     ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
-    ..pc<$6.Lesson>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lessons', $pb.PbFieldType.PM, subBuilder: $6.Lesson.create)
+    ..pc<$4.Lesson>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lessons', $pb.PbFieldType.PM, subBuilder: $4.Lesson.create)
     ..hasRequiredFields = false
   ;
 
@@ -32,7 +32,7 @@ class Unit extends $pb.GeneratedMessage {
     $core.String? title,
     $core.String? desc,
     $fixnum.Int64? createdAt,
-    $core.Iterable<$6.Lesson>? lessons,
+    $core.Iterable<$4.Lesson>? lessons,
   }) {
     final _result = create();
     if (id != null) {
@@ -110,7 +110,7 @@ class Unit extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<$6.Lesson> get lessons => $_getList(4);
+  $core.List<$4.Lesson> get lessons => $_getList(4);
 }
 
 class CreateUnitRequest extends $pb.GeneratedMessage {

@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mobile_v11/components/SearchBarWidget.dart';
-import 'package:mobile_v11/components/courseWidget.dart';
 import 'package:grpc/grpc.dart';
 import 'package:mobile_v11/components/fullPageCourseCard.dart';
 import 'package:mobile_v11/components/heroWidget.dart';
@@ -30,6 +27,8 @@ class _CourseListScreenState extends State<CourseListScreen> {
 
   final box = GetStorage();
 
+  bool showHero = true;
+
   bool firstLoading = true;
   _firstRequest() {
     if (box.read("accessToken") == null) {
@@ -47,6 +46,12 @@ class _CourseListScreenState extends State<CourseListScreen> {
         firstLoading = false;
       });
     }
+  }
+
+  _removeHero() {
+    setState(() {
+      showHero = false;
+    });
   }
 
   @override
@@ -104,11 +109,15 @@ class _CourseListScreenState extends State<CourseListScreen> {
             padding: const EdgeInsets.all(8),
             children: [
               // SliderWidget(),
-              const HeroWidget(),
+              showHero
+                  ? HeroWidget(
+                      removeHero: _removeHero,
+                    )
+                  : const SizedBox(),
               const SizedBox(
                 height: 8,
               ),
-              const SearchBarWidget(),
+              // const SearchBarWidget(),
               const SizedBox(
                 height: 8,
               ),
@@ -116,9 +125,8 @@ class _CourseListScreenState extends State<CourseListScreen> {
               SliderWidget(courses: courses),
               const ListCourseTitleWidget(title: "پیشنهاد ما", link: ""),
 
-              FullPageCourseCard(course: courses[0]),
-              FullPageCourseCard(course: courses[0]),
-              FullPageCourseCard(course: courses[0]),
+              for (var c in courses.sublist(0, 3))
+                FullPageCourseCard(course: c),
 
               const SizedBox(
                 height: 8,
@@ -129,7 +137,8 @@ class _CourseListScreenState extends State<CourseListScreen> {
 
               const SizedBox(
                 height: 8,
-              ),              const ListCourseTitleWidget(title: "تخفیف ویژه", link: ""),
+              ),
+              const ListCourseTitleWidget(title: "تخفیف ویژه", link: ""),
               SliderWidget(courses: courses),
 
               // GridView.count(

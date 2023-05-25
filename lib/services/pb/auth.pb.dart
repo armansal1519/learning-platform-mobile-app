@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'instructor.pb.dart' as $0;
-import 'user.pb.dart' as $2;
+import 'user.pb.dart' as $8;
 
 class InstructorRegisterReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InstructorRegisterReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
@@ -421,7 +421,7 @@ class UserRegisterReq extends $pb.GeneratedMessage {
 
 class UserRegisterResp extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserRegisterResp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
-    ..aOM<$2.User>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: $2.User.create)
+    ..aOM<$8.User>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: $8.User.create)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accessToken')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'refreshToken')
     ..hasRequiredFields = false
@@ -429,7 +429,7 @@ class UserRegisterResp extends $pb.GeneratedMessage {
 
   UserRegisterResp._() : super();
   factory UserRegisterResp({
-    $2.User? user,
+    $8.User? user,
     $core.String? accessToken,
     $core.String? refreshToken,
   }) {
@@ -467,15 +467,15 @@ class UserRegisterResp extends $pb.GeneratedMessage {
   static UserRegisterResp? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $2.User get user => $_getN(0);
+  $8.User get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user($2.User v) { setField(1, v); }
+  set user($8.User v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  $2.User ensureUser() => $_ensure(0);
+  $8.User ensureUser() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.String get accessToken => $_getSZ(1);
@@ -559,7 +559,7 @@ class UserLoginReq extends $pb.GeneratedMessage {
 
 class UserLoginResp extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserLoginResp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
-    ..aOM<$2.User>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: $2.User.create)
+    ..aOM<$8.User>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'user', subBuilder: $8.User.create)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accessToken')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'refreshToken')
     ..hasRequiredFields = false
@@ -567,7 +567,7 @@ class UserLoginResp extends $pb.GeneratedMessage {
 
   UserLoginResp._() : super();
   factory UserLoginResp({
-    $2.User? user,
+    $8.User? user,
     $core.String? accessToken,
     $core.String? refreshToken,
   }) {
@@ -605,15 +605,15 @@ class UserLoginResp extends $pb.GeneratedMessage {
   static UserLoginResp? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $2.User get user => $_getN(0);
+  $8.User get user => $_getN(0);
   @$pb.TagNumber(1)
-  set user($2.User v) { setField(1, v); }
+  set user($8.User v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearUser() => clearField(1);
   @$pb.TagNumber(1)
-  $2.User ensureUser() => $_ensure(0);
+  $8.User ensureUser() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.String get accessToken => $_getSZ(1);

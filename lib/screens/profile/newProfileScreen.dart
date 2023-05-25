@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
-import 'package:mobile_v11/helper/stringToInt.dart';
-import '../../components/listCourseTitleWidget.dart';
+import 'package:mobile_v11/screens/profile/statisticsCards.dart';
+import 'package:mobile_v11/services/pb/badge.pbgrpc.dart';
+import 'package:mobile_v11/services/pb/empty.pb.dart';
+
 import '../../components/smallBadgeWidget.dart';
 import '../../globals.dart';
-import '../../random.dart';
 import '../../services/pb/user.pbgrpc.dart';
 
 class NewProfileScreen extends StatefulWidget {
@@ -23,8 +24,10 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
 
   late ClientChannel _channel;
   late UserServiceClient _stub;
+  late BadgeServiceClient _badgeStub;
 
   User? user;
+  late ListLatestBadgeResponse resp;
 
   @override
   void initState() {
@@ -42,14 +45,68 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
         options: CallOptions(
             metadata: {'authorization': 'bearer ${box.read("accessToken")}'}));
 
+    _badgeStub = BadgeServiceClient(_channel,
+        options: CallOptions(
+            metadata: {'authorization': 'bearer ${box.read("accessToken")}'}));
+
     GetUserRequest req = GetUserRequest();
     _stub.get(req).then((p0) => {
           setState(() {
             user = p0;
-          })
+          }),
+          print(p0)
+        });
+
+    Empty empty = Empty();
+    _badgeStub.listLatest(empty).then((p0) => {
+          setState(() {
+            resp = p0;
+          }),
         });
 
     super.initState();
+  }
+
+  Widget getBadges(ListLatestBadgeResponse? resp) {
+    print(resp);
+    if (resp == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (resp.badgeList.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text("مدالی گرفته نشده"),
+              SizedBox(
+                width: 4,
+              ),
+              FaIcon(
+                FontAwesomeIcons.faceSadCry,
+                size: 28,
+              )
+            ],
+          ),
+        ),
+      );
+    }
+    return GridView.count(
+      shrinkWrap: true,
+      primary: false,
+      padding: const EdgeInsets.all(8),
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      crossAxisCount: 4,
+      childAspectRatio: 1 / 1,
+      children: [
+        // CourseWidget(course: courses[0],),
+        // CourseWidget(course: courses[1]),
+        // CourseWidget(course: courses[2]),
+        for (var i in [1, 2, 3, 4, 5, 6, 7]) const SmallBadgeWidget()
+      ],
+    );
   }
 
   Widget getUserOrAuthBtn(User user) {
@@ -63,7 +120,10 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).go('/profile/login');
+
+              },
               child: const Text(
                 "ورود",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -73,7 +133,10 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 10, 8),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).go('/profile/register');
+
+              },
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18))),
@@ -104,7 +167,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
             elevation: 0,
             title: Center(
               child: Text(
-                "پرفایل",
+                "پروفایل",
                 style: TextStyle(
                     fontSize: 24, color: Theme.of(context).primaryColorDark),
               ),
@@ -121,7 +184,7 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
             elevation: 0,
             title: Center(
               child: Text(
-                "پرفایل",
+                "پروفایل",
                 style: TextStyle(
                     fontSize: 24, color: Theme.of(context).primaryColorDark),
               ),
@@ -169,72 +232,15 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                const Text("آمار",style: TextStyle(fontSize: 18)),
-
+                const Text("آمار", style: TextStyle(fontSize: 18)),
                 SizedBox(
                   width: double.infinity,
                   height: 80,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        width: 160,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: getColorByInt(1),
-                            stops: const [0, 1],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            FaIcon(
-                              FontAwesomeIcons.coins,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "1600",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 160,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: getColorByInt(3),
-                            stops: const [0, 1],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            // FaIcon(FontAwesomeIcons.,color: Colors.white,),
-                            Text(
-                              "xp",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            Text(
-                              "2000",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            )
-                          ],
-                        ),
-                      ),
+                      getCoinCard(user!),
+                      getXPCard(user!),
                     ],
                   ),
                 ),
@@ -244,62 +250,8 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        width: 160,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: getColorByInt(2),
-                            stops: const [0, 1],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            FaIcon(
-                              FontAwesomeIcons.fireFlameCurved,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "12",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 160,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: getColorByInt(5),
-                            stops: const [0, 1],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            FaIcon(
-                              FontAwesomeIcons.book,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "4",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
+                      getSteakCard(user!),
+                      getFinishedLessonCard(user!)
                     ],
                   ),
                 ),
@@ -310,30 +262,25 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text("اخرین مدال ها", style: TextStyle(fontSize: 18)),
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "مشاهده همه",
-                          style: TextStyle(fontSize: 14),
-                        ))
+                    resp.badgeList.isEmpty
+                        ? TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              "مشاهده همه",
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                          )
+                        : TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              "مشاهده همه",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
                   ],
                 ),
-                GridView.count(
-                  shrinkWrap: true,
-                  primary: false,
-                  padding: const EdgeInsets.all(8),
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  crossAxisCount: 4,
-                  childAspectRatio: 1 / 1,
-                  children: [
-                    // CourseWidget(course: courses[0],),
-                    // CourseWidget(course: courses[1]),
-                    // CourseWidget(course: courses[2]),
-                    for (var i in [1, 2, 3, 4, 5, 6, 7])
-                      const SmallBadgeWidget()
-                  ],
-                ),
+                getBadges(resp),
                 const SizedBox(
                   height: 24,
                 )

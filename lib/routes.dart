@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_v11/screens/Auth/newLoginScreen.dart';
+import 'package:mobile_v11/screens/Auth/newRegisterScreen.dart';
 import 'package:mobile_v11/screens/comingSoon.dart';
 import 'package:mobile_v11/screens/course/ListCourseWithSearch.dart';
 import 'package:mobile_v11/screens/course/listCourseScreen.dart';
@@ -49,7 +51,7 @@ List<RouteBase> getRoutes() {
           // },
           pageBuilder: (context, state) {
             return CustomTransitionPage(
-              child:  ListCourseWithSearch(),
+              child: ListCourseWithSearch(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
@@ -68,7 +70,9 @@ List<RouteBase> getRoutes() {
           // },
           pageBuilder: (context, state) {
             return CustomTransitionPage(
-              child:  SingleCourseScreen(id: state.params["id"]! ,),
+              child: SingleCourseScreen(
+                id: state.params["id"]!,
+              ),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
@@ -112,7 +116,7 @@ List<RouteBase> getRoutes() {
           // },
           pageBuilder: (context, state) {
             return CustomTransitionPage(
-              child:  const LeitnerScreen(),
+              child: const LeitnerScreen(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
@@ -123,74 +127,102 @@ List<RouteBase> getRoutes() {
             );
           },
         ),
-
-
-
 
         GoRoute(
-          path: ':courseId',
-          // builder: (BuildContext context, GoRouterState state) {
-          //   return const DetailsScreen(label: 'A');
-          // },
-          pageBuilder: (context, state) {
-            return CustomTransitionPage(
-              child:  SingleMyCourseScreen(id: state.params["courseId"]! ,),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return FadeTransition(
-                  opacity: CurveTween(curve: Curves.easeIn).animate(animation),
-                  child: child,
-                );
-              },
-            );
-          },
-          routes: <RouteBase>[
-            GoRoute(
-              path: 'lesson/:lessonId',
-              // builder: (BuildContext context, GoRouterState state) {
-              //   return const DetailsScreen(label: 'A');
-              // },
-              pageBuilder: (context, state) {
-                return CustomTransitionPage(
-
-                  child:  LessonScreen(id: state.params["lessonId"]! ,),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(
-                      opacity: CurveTween(curve: Curves.easeIn).animate(animation),
-                      child: child,
-                    );
-                  },
-                );
-              },
-
-            ),
-
-          ]
-        ),
-
-
+            path: ':courseId',
+            // builder: (BuildContext context, GoRouterState state) {
+            //   return const DetailsScreen(label: 'A');
+            // },
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                child: SingleMyCourseScreen(
+                  id: state.params["courseId"]!,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeIn).animate(animation),
+                    child: child,
+                  );
+                },
+              );
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                path: 'lesson/:lessonId/:overall_subject',
+                // builder: (BuildContext context, GoRouterState state) {
+                //   return const DetailsScreen(label: 'A');
+                // },
+                pageBuilder: (context, state) {
+                  return CustomTransitionPage(
+                    child: LessonScreen(
+                        id: state.params["lessonId"]!,
+                        overallSubject: state.params["overall_subject"]!),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity:
+                            CurveTween(curve: Curves.easeIn).animate(animation),
+                        child: child,
+                      );
+                    },
+                  );
+                },
+              ),
+            ]),
       ],
     ),
 
-
-
     /// The third screen to display in the bottom navigation bar.
     GoRoute(
-      path: '/profile',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const NewProfileScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeIn).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
-
-    ),
+        path: '/profile',
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const NewProfileScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeIn).animate(animation),
+                child: child,
+              );
+            },
+          );
+        },
+        routes: <RouteBase>[
+          GoRoute(
+            path: 'login',
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                child: const NewLoginScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeIn).animate(animation),
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
+          GoRoute(
+            path: 'register',
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                child: const NewRegisterScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeIn).animate(animation),
+                    child: child,
+                  );
+                },
+              );
+            },
+          )
+        ]),
     GoRoute(
       path: '/d',
       pageBuilder: (context, state) {

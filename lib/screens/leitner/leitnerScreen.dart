@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grpc/grpc.dart';
@@ -7,7 +6,6 @@ import 'package:mobile_v11/screens/leitner/selectCourseDialog.dart';
 import 'package:mobile_v11/services/pb/leitnerQuestion.pbgrpc.dart';
 
 import '../../globals.dart';
-import '../../services/pb/question.pb.dart';
 
 class LeitnerScreen extends StatefulWidget {
   const LeitnerScreen({Key? key}) : super(key: key);

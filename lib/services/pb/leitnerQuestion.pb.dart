@@ -10,13 +10,13 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'question.pb.dart' as $4;
+import 'question.pb.dart' as $2;
 
 class GetLeitnerQuestionsDto extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetLeitnerQuestionsDto', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'myCourseQuestionId')
-    ..aOM<$4.Question>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'question', subBuilder: $4.Question.create)
+    ..aOM<$2.Question>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'question', subBuilder: $2.Question.create)
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rating', $pb.PbFieldType.O3)
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level', $pb.PbFieldType.O3)
     ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
@@ -27,7 +27,7 @@ class GetLeitnerQuestionsDto extends $pb.GeneratedMessage {
   factory GetLeitnerQuestionsDto({
     $core.String? id,
     $core.String? myCourseQuestionId,
-    $4.Question? question,
+    $2.Question? question,
     $core.int? rating,
     $core.int? level,
     $fixnum.Int64? createdAt,
@@ -93,15 +93,15 @@ class GetLeitnerQuestionsDto extends $pb.GeneratedMessage {
   void clearMyCourseQuestionId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $4.Question get question => $_getN(2);
+  $2.Question get question => $_getN(2);
   @$pb.TagNumber(3)
-  set question($4.Question v) { setField(3, v); }
+  set question($2.Question v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasQuestion() => $_has(2);
   @$pb.TagNumber(3)
   void clearQuestion() => clearField(3);
   @$pb.TagNumber(3)
-  $4.Question ensureQuestion() => $_ensure(2);
+  $2.Question ensureQuestion() => $_ensure(2);
 
   @$pb.TagNumber(4)
   $core.int get rating => $_getIZ(3);

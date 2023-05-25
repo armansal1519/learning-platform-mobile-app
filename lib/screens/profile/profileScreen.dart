@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mobile_v11/screens/Auth/authScreen.dart';
 import 'package:grpc/grpc.dart';
+import 'package:mobile_v11/screens/Auth/authScreen.dart';
 import 'package:mobile_v11/services/pb/user.pbgrpc.dart';
 
 import '../../globals.dart';

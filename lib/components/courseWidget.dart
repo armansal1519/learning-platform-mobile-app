@@ -2,10 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_v11/services/pb/course.pb.dart';
-import 'package:grpc/grpc.dart';
 
 import '../services/pb/course.pbgrpc.dart';
-
 
 class CourseWidget extends StatefulWidget {
   Course course;
@@ -22,8 +20,6 @@ class _CourseWidgetState extends State<CourseWidget> {
     void onTap() {
       GoRouter.of(context).go('/course/${widget.course.id}');
     }
-
-
 
     return InkWell(
       onTap: onTap,
@@ -76,11 +72,12 @@ class _CourseWidgetState extends State<CourseWidget> {
                   ),
                   Chip(
                     label: Text(
-                      widget.course.pricing == "free" ? "رایگان" : "${widget.course.price}",
+                      widget.course.pricing == "free"
+                          ? "رایگان"
+                          : "${widget.course.price}",
                       style: const TextStyle(
                           color: Color.fromRGBO(233, 219, 230, 1.0),
-
-                      fontSize: 10),
+                          fontSize: 10),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),

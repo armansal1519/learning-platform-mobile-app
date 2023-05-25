@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_v11/services/pb/course.pb.dart';
 
 import '../random.dart';
+import '../services/pb/myCourse.pb.dart';
 
-class NewCourseCardWidget extends StatefulWidget {
-  Course course;
+class NewMyCourseCardWidget extends StatefulWidget {
+  MyCourse myCourse;
 
-  NewCourseCardWidget({Key? key, required this.course}) : super(key: key);
+  NewMyCourseCardWidget({Key? key, required this.myCourse}) : super(key: key);
 
   @override
-  State<NewCourseCardWidget> createState() => _NewCourseCardWidgetState();
+  State<NewMyCourseCardWidget> createState() => _NewMyCourseCardWidgetState();
 }
 
-class _NewCourseCardWidgetState extends State<NewCourseCardWidget> {
-
+class _NewMyCourseCardWidgetState extends State<NewMyCourseCardWidget> {
   @override
   Widget build(BuildContext context) {
     void onTap() {
-      GoRouter.of(context).go('/course/${widget.course.id}');
+      GoRouter.of(context).go('/mycourses/${widget.myCourse.course.id}');
     }
 
-    var subject = widget.course.overallSubject;
+    var subject = widget.myCourse.course.overallSubject;
 
     return InkWell(
       onTap: onTap,
@@ -63,7 +62,7 @@ class _NewCourseCardWidgetState extends State<NewCourseCardWidget> {
                     height: 4,
                   ),
                   Text(
-                    widget.course.title,
+                    widget.myCourse.course.title,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   //
@@ -75,20 +74,20 @@ class _NewCourseCardWidgetState extends State<NewCourseCardWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${widget.course.instructor.firstName} ${widget.course.instructor.lastName}",
+                      "${widget.myCourse.course.instructor.firstName} ${widget.myCourse.course.instructor.lastName}",
                       style: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     Chip(
                       label: Text(
-                        widget.course.pricing == "free"
+                        widget.myCourse.course.pricing == "free"
                             ? "رایگان"
-                            : "${widget.course.price}",
+                            : "${widget.myCourse.course.price}",
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,fontWeight: FontWeight.bold),
+                            color: Color.fromRGBO(233, 219, 230, 1.0),
+                            fontSize: 10),
                       ),
-                      backgroundColor: getColor(subject)[1],
+                      backgroundColor: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     ),
                   ],

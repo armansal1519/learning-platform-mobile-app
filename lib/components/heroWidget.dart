@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HeroWidget extends StatefulWidget {
-  const HeroWidget({Key? key}) : super(key: key);
+  final Function removeHero;
+
+  const HeroWidget({Key? key, required this.removeHero}) : super(key: key);
 
   @override
   State<HeroWidget> createState() => _HeroWidgetState();
@@ -36,8 +37,8 @@ class _HeroWidgetState extends State<HeroWidget> {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
-        child:
-          Stack(children: [
+        child: Stack(
+          children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Row(
@@ -49,8 +50,8 @@ class _HeroWidgetState extends State<HeroWidget> {
                       children: [
                         Text(
                           title,
-                          style:
-                              const TextStyle(color: Colors.white, fontSize: 24),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 24),
                         ),
                         SizedBox(
                           width: 100,
@@ -88,14 +89,15 @@ class _HeroWidgetState extends State<HeroWidget> {
               top: 0,
               left: 0,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.removeHero();
+                },
                 icon: const FaIcon(FontAwesomeIcons.circleXmark),
                 color: Colors.white,
               ),
             )
           ],
-          ),
-
+        ),
       ),
     );
   }

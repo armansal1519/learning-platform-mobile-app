@@ -59,8 +59,7 @@ FloatingActionButton getFloutingButton(BuildContext context){
       GoRouter.of(context)
           .go('/mycourses/leitner');
     },
-    icon: const Icon(Icons.update),
-    label: const Text('لایتنر'),
+    label: const Text('شروع'),
   );
 }
 

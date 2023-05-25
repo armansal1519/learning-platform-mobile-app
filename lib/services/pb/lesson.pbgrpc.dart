@@ -10,72 +10,72 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'lesson.pb.dart' as $6;
+import 'lesson.pb.dart' as $4;
 import 'empty.pb.dart' as $1;
 export 'lesson.pb.dart';
 
 class LessonServiceClient extends $grpc.Client {
-  static final _$create = $grpc.ClientMethod<$6.CreateLessonRequest, $6.Lesson>(
+  static final _$create = $grpc.ClientMethod<$4.CreateLessonRequest, $4.Lesson>(
       '/pb.LessonService/Create',
-      ($6.CreateLessonRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $6.Lesson.fromBuffer(value));
-  static final _$get = $grpc.ClientMethod<$6.GetLessonRequest, $6.Lesson>(
+      ($4.CreateLessonRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $4.Lesson.fromBuffer(value));
+  static final _$get = $grpc.ClientMethod<$4.GetLessonRequest, $4.Lesson>(
       '/pb.LessonService/Get',
-      ($6.GetLessonRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $6.Lesson.fromBuffer(value));
-  static final _$update = $grpc.ClientMethod<$6.UpdateLessonRequest, $6.Lesson>(
+      ($4.GetLessonRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $4.Lesson.fromBuffer(value));
+  static final _$update = $grpc.ClientMethod<$4.UpdateLessonRequest, $4.Lesson>(
       '/pb.LessonService/Update',
-      ($6.UpdateLessonRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $6.Lesson.fromBuffer(value));
-  static final _$delete = $grpc.ClientMethod<$6.DeleteLessonRequest, $1.Empty>(
+      ($4.UpdateLessonRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $4.Lesson.fromBuffer(value));
+  static final _$delete = $grpc.ClientMethod<$4.DeleteLessonRequest, $1.Empty>(
       '/pb.LessonService/Delete',
-      ($6.DeleteLessonRequest value) => value.writeToBuffer(),
+      ($4.DeleteLessonRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$list =
-      $grpc.ClientMethod<$6.ListLessonRequest, $6.ListLessonResponse>(
+      $grpc.ClientMethod<$4.ListLessonRequest, $4.ListLessonResponse>(
           '/pb.LessonService/List',
-          ($6.ListLessonRequest value) => value.writeToBuffer(),
+          ($4.ListLessonRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $6.ListLessonResponse.fromBuffer(value));
-  static final _$batchCreate = $grpc.ClientMethod<$6.BatchCreateLessonsRequest,
-          $6.BatchCreateLessonsResponse>(
+              $4.ListLessonResponse.fromBuffer(value));
+  static final _$batchCreate = $grpc.ClientMethod<$4.BatchCreateLessonsRequest,
+          $4.BatchCreateLessonsResponse>(
       '/pb.LessonService/BatchCreate',
-      ($6.BatchCreateLessonsRequest value) => value.writeToBuffer(),
+      ($4.BatchCreateLessonsRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
-          $6.BatchCreateLessonsResponse.fromBuffer(value));
+          $4.BatchCreateLessonsResponse.fromBuffer(value));
 
   LessonServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$6.Lesson> create($6.CreateLessonRequest request,
+  $grpc.ResponseFuture<$4.Lesson> create($4.CreateLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$create, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.Lesson> get($6.GetLessonRequest request,
+  $grpc.ResponseFuture<$4.Lesson> get($4.GetLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$get, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.Lesson> update($6.UpdateLessonRequest request,
+  $grpc.ResponseFuture<$4.Lesson> update($4.UpdateLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$update, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.Empty> delete($6.DeleteLessonRequest request,
+  $grpc.ResponseFuture<$1.Empty> delete($4.DeleteLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$delete, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.ListLessonResponse> list($6.ListLessonRequest request,
+  $grpc.ResponseFuture<$4.ListLessonResponse> list($4.ListLessonRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$list, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.BatchCreateLessonsResponse> batchCreate(
-      $6.BatchCreateLessonsRequest request,
+  $grpc.ResponseFuture<$4.BatchCreateLessonsResponse> batchCreate(
+      $4.BatchCreateLessonsRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$batchCreate, request, options: options);
   }
@@ -85,96 +85,96 @@ abstract class LessonServiceBase extends $grpc.Service {
   $core.String get $name => 'pb.LessonService';
 
   LessonServiceBase() {
-    $addMethod($grpc.ServiceMethod<$6.CreateLessonRequest, $6.Lesson>(
+    $addMethod($grpc.ServiceMethod<$4.CreateLessonRequest, $4.Lesson>(
         'Create',
         create_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $6.CreateLessonRequest.fromBuffer(value),
-        ($6.Lesson value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$6.GetLessonRequest, $6.Lesson>(
+            $4.CreateLessonRequest.fromBuffer(value),
+        ($4.Lesson value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$4.GetLessonRequest, $4.Lesson>(
         'Get',
         get_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $6.GetLessonRequest.fromBuffer(value),
-        ($6.Lesson value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$6.UpdateLessonRequest, $6.Lesson>(
+        ($core.List<$core.int> value) => $4.GetLessonRequest.fromBuffer(value),
+        ($4.Lesson value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$4.UpdateLessonRequest, $4.Lesson>(
         'Update',
         update_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $6.UpdateLessonRequest.fromBuffer(value),
-        ($6.Lesson value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$6.DeleteLessonRequest, $1.Empty>(
+            $4.UpdateLessonRequest.fromBuffer(value),
+        ($4.Lesson value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$4.DeleteLessonRequest, $1.Empty>(
         'Delete',
         delete_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $6.DeleteLessonRequest.fromBuffer(value),
+            $4.DeleteLessonRequest.fromBuffer(value),
         ($1.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$6.ListLessonRequest, $6.ListLessonResponse>(
+    $addMethod($grpc.ServiceMethod<$4.ListLessonRequest, $4.ListLessonResponse>(
         'List',
         list_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $6.ListLessonRequest.fromBuffer(value),
-        ($6.ListLessonResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$6.BatchCreateLessonsRequest,
-            $6.BatchCreateLessonsResponse>(
+        ($core.List<$core.int> value) => $4.ListLessonRequest.fromBuffer(value),
+        ($4.ListLessonResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$4.BatchCreateLessonsRequest,
+            $4.BatchCreateLessonsResponse>(
         'BatchCreate',
         batchCreate_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $6.BatchCreateLessonsRequest.fromBuffer(value),
-        ($6.BatchCreateLessonsResponse value) => value.writeToBuffer()));
+            $4.BatchCreateLessonsRequest.fromBuffer(value),
+        ($4.BatchCreateLessonsResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$6.Lesson> create_Pre($grpc.ServiceCall call,
-      $async.Future<$6.CreateLessonRequest> request) async {
+  $async.Future<$4.Lesson> create_Pre($grpc.ServiceCall call,
+      $async.Future<$4.CreateLessonRequest> request) async {
     return create(call, await request);
   }
 
-  $async.Future<$6.Lesson> get_Pre($grpc.ServiceCall call,
-      $async.Future<$6.GetLessonRequest> request) async {
+  $async.Future<$4.Lesson> get_Pre($grpc.ServiceCall call,
+      $async.Future<$4.GetLessonRequest> request) async {
     return get(call, await request);
   }
 
-  $async.Future<$6.Lesson> update_Pre($grpc.ServiceCall call,
-      $async.Future<$6.UpdateLessonRequest> request) async {
+  $async.Future<$4.Lesson> update_Pre($grpc.ServiceCall call,
+      $async.Future<$4.UpdateLessonRequest> request) async {
     return update(call, await request);
   }
 
   $async.Future<$1.Empty> delete_Pre($grpc.ServiceCall call,
-      $async.Future<$6.DeleteLessonRequest> request) async {
+      $async.Future<$4.DeleteLessonRequest> request) async {
     return delete(call, await request);
   }
 
-  $async.Future<$6.ListLessonResponse> list_Pre($grpc.ServiceCall call,
-      $async.Future<$6.ListLessonRequest> request) async {
+  $async.Future<$4.ListLessonResponse> list_Pre($grpc.ServiceCall call,
+      $async.Future<$4.ListLessonRequest> request) async {
     return list(call, await request);
   }
 
-  $async.Future<$6.BatchCreateLessonsResponse> batchCreate_Pre(
+  $async.Future<$4.BatchCreateLessonsResponse> batchCreate_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$6.BatchCreateLessonsRequest> request) async {
+      $async.Future<$4.BatchCreateLessonsRequest> request) async {
     return batchCreate(call, await request);
   }
 
-  $async.Future<$6.Lesson> create(
-      $grpc.ServiceCall call, $6.CreateLessonRequest request);
-  $async.Future<$6.Lesson> get(
-      $grpc.ServiceCall call, $6.GetLessonRequest request);
-  $async.Future<$6.Lesson> update(
-      $grpc.ServiceCall call, $6.UpdateLessonRequest request);
+  $async.Future<$4.Lesson> create(
+      $grpc.ServiceCall call, $4.CreateLessonRequest request);
+  $async.Future<$4.Lesson> get(
+      $grpc.ServiceCall call, $4.GetLessonRequest request);
+  $async.Future<$4.Lesson> update(
+      $grpc.ServiceCall call, $4.UpdateLessonRequest request);
   $async.Future<$1.Empty> delete(
-      $grpc.ServiceCall call, $6.DeleteLessonRequest request);
-  $async.Future<$6.ListLessonResponse> list(
-      $grpc.ServiceCall call, $6.ListLessonRequest request);
-  $async.Future<$6.BatchCreateLessonsResponse> batchCreate(
-      $grpc.ServiceCall call, $6.BatchCreateLessonsRequest request);
+      $grpc.ServiceCall call, $4.DeleteLessonRequest request);
+  $async.Future<$4.ListLessonResponse> list(
+      $grpc.ServiceCall call, $4.ListLessonRequest request);
+  $async.Future<$4.BatchCreateLessonsResponse> batchCreate(
+      $grpc.ServiceCall call, $4.BatchCreateLessonsRequest request);
 }

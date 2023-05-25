@@ -1,17 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mobile_v11/components/courseWidget.dart';
 import 'package:grpc/grpc.dart';
 import 'package:mobile_v11/components/myCourseListItem.dart';
-import 'package:mobile_v11/components/myCourseWidget.dart';
-import 'package:mobile_v11/components/sliderWidget.dart';
-import 'package:mobile_v11/components/smallBadgeWidget.dart';
+import 'package:mobile_v11/components/newMyCourseWidgetCard.dart';
 import 'package:mobile_v11/screens/Auth/authScreen.dart';
 import 'package:mobile_v11/services/pb/myCourse.pbgrpc.dart';
 
-import '../../components/listCourseTitleWidget.dart';
-import '../../components/newCourseCardWidget.dart';
 import '../../globals.dart';
 import '../../layout.dart';
 
@@ -107,32 +101,32 @@ class _ListMyCourseScreenState extends State<ListMyCourseScreen> {
               const SizedBox(
                 height: 8,
               ),
-              MyCourseListItem(myCourse: myCourses[0]),
-              MyCourseListItem(myCourse: myCourses[0]),
-              MyCourseListItem(myCourse: myCourses[0]),
-              const SizedBox(
-                height: 24,
-              ),
+              for (var mc in myCourses)
+              MyCourseListItem(myCourse: mc),
 
               const SizedBox(
                 height: 24,
               ),
+              //
+              // const SizedBox(
+              //   height: 24,
+              // ),
+              //
+              // const Text(
+              //   "برنامه امروز",
+              //   style: TextStyle(fontSize: 18),
+              // ),
+              // const SizedBox(
+              //   height: 4,
+              // ),
 
-              const Text(
-                "برنامه امروز",
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-
-              MyCourseListItem(myCourse: myCourses[0]),
-              MyCourseListItem(myCourse: myCourses[0]),
-              MyCourseListItem(myCourse: myCourses[0]),
-              MyCourseListItem(myCourse: myCourses[0]),
-              const SizedBox(
-                height: 24,
-              ),
+              // MyCourseListItem(myCourse: myCourses[0]),
+              // MyCourseListItem(myCourse: myCourses[0]),
+              // MyCourseListItem(myCourse: myCourses[0]),
+              // MyCourseListItem(myCourse: myCourses[0]),
+              // const SizedBox(
+              //   height: 24,
+              // ),
               const Text(
                 "درس های من",
                 style: TextStyle(
@@ -152,8 +146,8 @@ class _ListMyCourseScreenState extends State<ListMyCourseScreen> {
                 crossAxisCount: 2,
                 childAspectRatio: 4 / 5,
                 children: [
-                  for (var i in [1, 2, 3, 4, 5, 6, 7, 8, 9])
-                    NewCourseCardWidget(course: myCourses[0].course)
+                  for (var mc in myCourses)
+                    NewMyCourseCardWidget(myCourse: mc)
                 ],
               ),
             ],

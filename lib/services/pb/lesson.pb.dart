@@ -10,8 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'question.pb.dart' as $4;
-import 'guide.pb.dart' as $5;
+import 'question.pb.dart' as $2;
+import 'guide.pb.dart' as $3;
 
 class Lesson extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Lesson', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'pb'), createEmptyInstance: create)
@@ -21,8 +21,8 @@ class Lesson extends $pb.GeneratedMessage {
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'desc')
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rating', $pb.PbFieldType.O3)
     ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
-    ..pc<$4.Question>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PM, subBuilder: $4.Question.create)
-    ..aOM<$5.Guide>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guide', subBuilder: $5.Guide.create)
+    ..pc<$2.Question>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'questions', $pb.PbFieldType.PM, subBuilder: $2.Question.create)
+    ..aOM<$3.Guide>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guide', subBuilder: $3.Guide.create)
     ..aOB(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isDone')
     ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'score', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
@@ -36,8 +36,8 @@ class Lesson extends $pb.GeneratedMessage {
     $core.String? desc,
     $core.int? rating,
     $fixnum.Int64? createdAt,
-    $core.Iterable<$4.Question>? questions,
-    $5.Guide? guide,
+    $core.Iterable<$2.Question>? questions,
+    $3.Guide? guide,
     $core.bool? isDone,
     $core.int? score,
   }) {
@@ -150,18 +150,18 @@ class Lesson extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.List<$4.Question> get questions => $_getList(6);
+  $core.List<$2.Question> get questions => $_getList(6);
 
   @$pb.TagNumber(8)
-  $5.Guide get guide => $_getN(7);
+  $3.Guide get guide => $_getN(7);
   @$pb.TagNumber(8)
-  set guide($5.Guide v) { setField(8, v); }
+  set guide($3.Guide v) { setField(8, v); }
   @$pb.TagNumber(8)
   $core.bool hasGuide() => $_has(7);
   @$pb.TagNumber(8)
   void clearGuide() => clearField(8);
   @$pb.TagNumber(8)
-  $5.Guide ensureGuide() => $_ensure(7);
+  $3.Guide ensureGuide() => $_ensure(7);
 
   @$pb.TagNumber(9)
   $core.bool get isDone => $_getBF(8);

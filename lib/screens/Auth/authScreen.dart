@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grpc/grpc.dart';
 import 'package:mobile_v11/globals.dart';
 import 'package:mobile_v11/services/pb/auth.pbgrpc.dart';
-import 'package:grpc/grpc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);

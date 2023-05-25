@@ -39,10 +39,20 @@ FaIcon getIcon(String s,double size) {
         return  FaIcon(FontAwesomeIcons.moneyBillTransfer,color: Colors.white,
                   size: size,);
       }
-    case 'lang_en':
+    case 'lang_en_grammar':
+      {
+        return  FaIcon(FontAwesomeIcons.spellCheck,color: Colors.white,
+                  size: size-10,);
+      }
+    case 'lang_en_other':
       {
         return  FaIcon(FontAwesomeIcons.earthAmericas,color: Colors.white,
-                  size: size,);
+          size: size,);
+      }
+    case 'lang_en_vocablery':
+      {
+        return  FaIcon(FontAwesomeIcons.language,color: Colors.white,
+          size: size,);
       }
     case 'lang_asia':
       {
@@ -98,13 +108,28 @@ List<Color> getColor(String s) {
           Colors.indigoAccent,
         ];
       }
-    case 'lang_en':
+    case 'lang_en_grammar':
       {
         return [
           Colors.orange.shade300,
-          Colors.orange,
+          Colors.orange.shade500,
         ];
       }
+    case 'lang_en_vocablery':
+      {
+        return [
+          Colors.pink.shade300,
+          Colors.pink.shade500,
+        ];
+      }
+    case 'lang_en_other':
+      {
+        return [
+          Colors.indigo.shade300,
+          Colors.indigo,
+        ];
+      }
+
     case 'lang_asia':
       {
         return [
@@ -116,7 +141,7 @@ List<Color> getColor(String s) {
       {
         return [
           Colors.pink.shade300,
-          Colors.pink,
+          Colors.pink.shade500,
         ];
       }
     case 'cs':
@@ -156,6 +181,83 @@ List<Color> getColor(String s) {
       }
   }
 }
+
+List<Color> getTextColor(String s) {
+  switch (s) {
+    case 'trade':
+      {
+        return [
+          Colors.teal.shade300,
+          Colors.teal.shade700,
+        ];
+      }
+    case 'economy':
+      {
+        return [
+          Colors.indigoAccent.shade200,
+          Colors.indigoAccent.shade700,
+        ];
+      }
+    case 'lang_en':
+      {
+        return [
+          Colors.orange.shade300,
+          Colors.orange.shade700,
+        ];
+      }
+
+    case 'lang_asia':
+      {
+        return [
+          Colors.purple.shade300,
+          Colors.purple.shade700,
+        ];
+      }
+    case 'lang_eu':
+      {
+        return [
+          Colors.pink.shade300,
+          Colors.pink.shade700,
+        ];
+      }
+    case 'cs':
+      {
+        return [
+          Colors.blue.shade300,
+          Colors.blue.shade700,
+        ];
+      }
+    case 'kon':
+      {
+        return [
+          Colors.red.shade300,
+          Colors.red.shade700,
+        ];
+      }
+    case 'math':
+      {
+        return [
+          Colors.indigo.shade300,
+          Colors.indigo.shade700,
+        ];
+      }
+    case 'science':
+      {
+        return [
+          Colors.cyan.shade300,
+          Colors.cyan.shade700,
+        ];
+      }
+    default:
+      {
+        return [
+          Colors.grey.shade300,
+          Colors.grey,
+        ];
+      }
+  }
+}
+
 
 
 
