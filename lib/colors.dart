@@ -111,8 +111,8 @@ List<Color> getColor(String s) {
     case 'lang_en_grammar':
       {
         return [
-          Colors.orange.shade300,
-          Colors.orange.shade500,
+          Colors.purple.shade300,
+          Colors.purple.shade700,
         ];
       }
     case 'lang_en_vocablery':
@@ -203,6 +203,27 @@ List<Color> getTextColor(String s) {
         return [
           Colors.orange.shade300,
           Colors.orange.shade700,
+        ];
+      }
+    case 'lang_en_grammar':
+      {
+        return [
+          Colors.purple.shade300,
+          Colors.purple.shade700,
+        ];
+      }
+    case 'lang_en_vocablery':
+      {
+        return [
+          Colors.pink.shade300,
+          Colors.pink.shade700,
+        ];
+      }
+    case 'lang_en_other':
+      {
+        return [
+          Colors.indigo.shade300,
+          Colors.indigo.shade700,
         ];
       }
 

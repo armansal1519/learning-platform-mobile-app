@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_v11/random.dart';
+import 'package:mobile_v11/colors.dart';
 import 'package:mobile_v11/services/pb/lesson.pb.dart';
 import 'package:mobile_v11/services/pb/unit.pb.dart';
 
@@ -103,33 +103,38 @@ class _MyLessonWidgetState extends State<MyLessonWidget> {
     }
 
     return InkWell(
-        autofocus: true,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.lesson!.title,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  AutoSizeText(
-                    widget.lesson!.desc,
-                    maxLines: 1,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                  Divider(
-                    color: Theme.of(context).primaryColor,
-                    thickness: 2,
-                  ),
-                ],
-              ),
+      autofocus: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  widget.lesson!.title,
+                  maxFontSize: 14,
+                  minFontSize: 10,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+                AutoSizeText(
+                  widget.lesson!.desc,
+                  maxLines: 1,
+                  maxFontSize: 12,
+                  // style: const TextStyle(fontSize: 14),
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  thickness: 2,
+                ),
+              ],
             ),
-            isDone(widget.lesson!),
-          ],
-        ));
+          ),
+          isDone(widget.lesson!),
+        ],
+      ),
+    );
   }
 }

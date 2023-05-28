@@ -153,7 +153,9 @@ class _NewProfileScreenState extends State<NewProfileScreen> {
       );
     }
     return Row(
-      children: [Text("${user.firstName} ${user.lastName} ")],
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("${user.firstName} ${user.lastName} " ,style: TextStyle(fontSize: 24),)],
     );
   }
 

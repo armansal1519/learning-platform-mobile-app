@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
-import 'package:mobile_v11/random.dart';
+import 'package:mobile_v11/colors.dart';
 import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 import 'package:mobile_v11/services/pb/submit.pbgrpc.dart';
 
@@ -74,8 +74,6 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
   }
 
   callback(String answer) {
-    print(answer);
-
     setState(() {
       selectedAnswers[index] = answer;
     });
@@ -168,45 +166,6 @@ class _QuestionsWidgetState extends State<QuestionsWidget> {
     }
   }
 
-  Widget answeredText() {
-    if (status[index] == QuestionStatus.right) {
-      return Row(
-        children: const [
-          Icon(
-            Icons.check_circle_outline,
-            color: Colors.green,
-            size: 30,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            "Awesome",
-            style: TextStyle(color: Colors.green, fontSize: 24),
-          ),
-        ],
-      );
-    } else if (status[index] == QuestionStatus.wrong) {
-      return Column(
-        children: [
-          // const Icon(
-          //   Icons.close,
-          //   color: Colors.red,
-          //   size: 30,
-          // ),
-          const SizedBox(
-            width: 8,
-          ),
-
-          Text(
-            "جواب درست: \n${widget.questions[index].metadata.rightAnswer} ",
-            style: const TextStyle(fontSize: 20),
-          ),
-        ],
-      );
-    }
-    return const Text("");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -396,7 +355,6 @@ class _ChoiceState extends State<Choice> {
       );
     } else {
       if (widget.isSelected && widget.isRightAnswer) {
-        print(widget.isSelected && widget.isRightAnswer);
         return Container(
           width: double.infinity,
           child: ElevatedButton(
@@ -408,6 +366,25 @@ class _ChoiceState extends State<Choice> {
           ),
         );
       } else {
+        if (widget.userTapSubmit && widget.isRightAnswer) {
+          return Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(4),
+            child: ElevatedButton(
+              onPressed: () {
+                widget.callback(widget.answer);
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.answer,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          );
+        }
         return Container(
           width: double.infinity,
           padding: EdgeInsets.all(4),

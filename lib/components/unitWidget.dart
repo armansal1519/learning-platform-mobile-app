@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_v11/services/pb/lesson.pb.dart';
 import 'package:mobile_v11/services/pb/unit.pb.dart';
 
-import '../random.dart';
+import '../colors.dart';
 
 class UnitWidget extends StatefulWidget {
   final Unit unit;
@@ -23,6 +23,7 @@ class _UnitWidgetState extends State<UnitWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 20,),
         Text(
           widget.unit!.title,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

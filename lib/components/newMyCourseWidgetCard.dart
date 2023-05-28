@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../random.dart';
+import '../colors.dart';
 import '../services/pb/myCourse.pb.dart';
 
 class NewMyCourseCardWidget extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NewMyCourseCardWidgetState extends State<NewMyCourseCardWidget> {
   @override
   Widget build(BuildContext context) {
     void onTap() {
-      GoRouter.of(context).go('/mycourses/${widget.myCourse.course.id}');
+      GoRouter.of(context).go('/mycourses/${widget.myCourse.id}');
     }
 
     var subject = widget.myCourse.course.overallSubject;
@@ -78,18 +78,18 @@ class _NewMyCourseCardWidgetState extends State<NewMyCourseCardWidget> {
                       style: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.bold),
                     ),
-                    Chip(
-                      label: Text(
-                        widget.myCourse.course.pricing == "free"
-                            ? "رایگان"
-                            : "${widget.myCourse.course.price}",
-                        style: const TextStyle(
-                            color: Color.fromRGBO(233, 219, 230, 1.0),
-                            fontSize: 10),
-                      ),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    ),
+                    // Chip(
+                    //   label: Text(
+                    //     widget.myCourse.course.pricing == "free"
+                    //         ? "رایگان"
+                    //         : "${widget.myCourse.course.price}",
+                    //     style: const TextStyle(
+                    //         color: Color.fromRGBO(233, 219, 230, 1.0),
+                    //         fontSize: 10),
+                    //   ),
+                    //   backgroundColor: Theme.of(context).primaryColor,
+                    //   padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    // ),
                   ],
                 ),
               ),

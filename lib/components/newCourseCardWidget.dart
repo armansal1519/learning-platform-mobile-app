@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_v11/services/pb/course.pb.dart';
 
-import '../random.dart';
+import '../colors.dart';
 
 class NewCourseCardWidget extends StatefulWidget {
   Course course;
@@ -14,7 +15,6 @@ class NewCourseCardWidget extends StatefulWidget {
 }
 
 class _NewCourseCardWidgetState extends State<NewCourseCardWidget> {
-
   @override
   Widget build(BuildContext context) {
     void onTap() {
@@ -80,13 +80,34 @@ class _NewCourseCardWidgetState extends State<NewCourseCardWidget> {
                           fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     Chip(
-                      label: Text(
-                        widget.course.pricing == "free"
-                            ? "رایگان"
-                            : "${widget.course.price}",
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,fontWeight: FontWeight.bold),
+                      label: Row(
+                        children: [
+                          widget.course.pricing == "free"
+                              ? const SizedBox()
+                              : const FaIcon(
+                                  FontAwesomeIcons.coins,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          widget.course.pricing == "free"
+                              ? const Text(
+                                  "رایگان",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                )
+                              : Text(
+                                  "${widget.course.price}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                        ],
                       ),
                       backgroundColor: getColor(subject)[1],
                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),

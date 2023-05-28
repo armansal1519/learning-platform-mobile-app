@@ -6,6 +6,7 @@ import 'package:mobile_v11/services/pb/leitnerQuestion.pbgrpc.dart';
 import 'package:mobile_v11/services/pb/question.pbgrpc.dart';
 
 import '../../globals.dart';
+import '../../colors.dart';
 
 enum QuestionStatus { submit, right, wrong }
 
@@ -14,10 +15,13 @@ class LeitnerQuestionsWidget extends StatefulWidget {
 
   Function emptyQuestionCallback;
 
+  final String overallSubject;
+
   LeitnerQuestionsWidget({
     Key? key,
     required this.leitnerQuestions,
     required this.emptyQuestionCallback,
+    required this.overallSubject
   }) : super(key: key);
 
   @override
@@ -30,6 +34,8 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
   List<int> wrongIndexes = [];
   List<String> selectedAnswers = ["default"];
   List<QuestionStatus> status = [QuestionStatus.submit];
+  List<bool> hasSubmit = [false];
+
 
   late ClientChannel _channel;
   late LeitnerQuestionServiceClient _stub;
@@ -69,23 +75,26 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
   }
 
   callback(String answer) {
+    print("run callback");
     setState(() {
       selectedAnswers[index] = answer;
     });
   }
 
   onTapSubmit() {
+    print("tap submit");
+
     if ((status[index] == QuestionStatus.right ||
             status[index] == QuestionStatus.wrong) &&
         index == widget.leitnerQuestions.length - 1) {
-      widget.emptyQuestionCallback!();
+      widget.emptyQuestionCallback();
     }
 
-    print(
-      "on submit : $index",
-    );
+
     if (status[index] == QuestionStatus.right) {
       selectedAnswers.add("default");
+      hasSubmit.add(false);
+
       status.add(QuestionStatus.submit);
 
       SubmitRequest req = SubmitRequest();
@@ -99,6 +108,7 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
       });
     } else if (status[index] == QuestionStatus.wrong) {
       selectedAnswers.add("default");
+      hasSubmit.add(false);
       status.add(QuestionStatus.submit);
       wrongIndexes.add(index);
 
@@ -121,72 +131,83 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
         } else {
           status[index] = QuestionStatus.wrong;
         }
+        hasSubmit[index] = true;
+
       });
     }
   }
 
   Widget onTapSubmitText() {
     if (status[index] == QuestionStatus.right) {
-      return const Text("بعدی");
+      return const Text(
+        "بعدی",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     } else if (status[index] == QuestionStatus.wrong) {
-      return const Text("بعدی");
+      return const Text(
+        "بعدی",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     } else {
-      return const Text("ارسال");
+      return const Text(
+        "ارسال",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
     }
   }
 
-  Color onTapSubmitColor() {
+  List<Color> onTapSubmitColor() {
     if (status[index] == QuestionStatus.right) {
-      return Colors.green;
+      return [Colors.green, Colors.green.shade700];
     } else if (status[index] == QuestionStatus.wrong) {
-      return Colors.red;
+      return [Colors.red, Colors.red.shade700];
     } else {
-      return Theme.of(context).primaryColor;
+      return getColor(widget.overallSubject);
     }
   }
 
-  Widget answeredText() {
-    if (status[index] == QuestionStatus.right) {
-      return Row(
-        children: const [
-          Icon(
-            Icons.check_circle_outline,
-            color: Colors.green,
-            size: 30,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            "Awesome",
-            style: TextStyle(color: Colors.green, fontSize: 24),
-          ),
-        ],
-      );
-    } else if (status[index] == QuestionStatus.wrong) {
-      return Column(
-        children: [
-          // const Icon(
-          //   Icons.close,
-          //   color: Colors.red,
-          //   size: 30,
-          // ),
-          const SizedBox(
-            width: 8,
-          ),
-          SingleChildScrollView(
-            child: AutoSizeText(
-              "جواب درست: \n${widget.leitnerQuestions[index].question.metadata.rightAnswer} ",
-              style: const TextStyle(fontSize: 18),
-              minFontSize: 14,
-              maxLines: 3,
-            ),
-          ),
-        ],
-      );
-    }
-    return const Text("");
-  }
+  // Widget answeredText() {
+  //   if (status[index] == QuestionStatus.right) {
+  //     return Row(
+  //       children: const [
+  //         Icon(
+  //           Icons.check_circle_outline,
+  //           color: Colors.green,
+  //           size: 30,
+  //         ),
+  //         SizedBox(
+  //           width: 8,
+  //         ),
+  //         Text(
+  //           "Awesome",
+  //           style: TextStyle(color: Colors.green, fontSize: 24),
+  //         ),
+  //       ],
+  //     );
+  //   } else if (status[index] == QuestionStatus.wrong) {
+  //     return Column(
+  //       children: [
+  //         // const Icon(
+  //         //   Icons.close,
+  //         //   color: Colors.red,
+  //         //   size: 30,
+  //         // ),
+  //         const SizedBox(
+  //           width: 8,
+  //         ),
+  //         SingleChildScrollView(
+  //           child: AutoSizeText(
+  //             "جواب درست: \n${widget.leitnerQuestions[index].question.metadata.rightAnswer} ",
+  //             style: const TextStyle(fontSize: 18),
+  //             minFontSize: 14,
+  //             maxLines: 3,
+  //           ),
+  //         ),
+  //       ],
+  //     );
+  //   }
+  //   return const Text("");
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -216,13 +237,14 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
               height: 16,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Flexible(
                   child: Text(
+                    textAlign:TextAlign.left,
                     widget.leitnerQuestions[index].question.metadata.question,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
                   ),
                 ),
@@ -244,29 +266,52 @@ class _LeitnerQuestionsWidgetState extends State<LeitnerQuestionsWidget> {
                 isRightAnswer: choice ==
                     widget
                         .leitnerQuestions[index].question.metadata.rightAnswer,
-                userTapSubmit: selectedAnswers[index] != "default",
+                userTapSubmit: hasSubmit[index],
+                overallSubject: widget.overallSubject,
+
               ),
+            // SizedBox(
+            //   height: 64,
+            //   child: answeredText(),
+            // ),
+
             SizedBox(
-              height: 64,
-              child: answeredText(),
-            ),
-            SizedBox(
-              width: double.infinity,
               height: 52,
-              child: ElevatedButton(
-                onPressed: onTapSubmit,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: onTapSubmitColor()),
-                child: onTapSubmitText(),
+              width: double.infinity,
+              child: InkWell(
+                onTap: onTapSubmit,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: onTapSubmitColor(),
+                      stops: const [0, 1],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Center(
+                    child: onTapSubmitText(),
+                  ),
+                ),
               ),
             ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   height: 52,
+            //   child: ElevatedButton(
+            //     onPressed: onTapSubmit,
+            //     style: ElevatedButton.styleFrom(
+            //         backgroundColor: onTapSubmitColor()),
+            //     child: onTapSubmitText(),
+            //   ),
+            // ),
           ],
         ),
       ],
     );
   }
 }
-
 class Choice extends StatefulWidget {
   Function(String) callback;
 
@@ -278,6 +323,8 @@ class Choice extends StatefulWidget {
 
   bool userTapSubmit;
 
+  String overallSubject;
+
   Choice({
     Key? key,
     required this.answer,
@@ -285,6 +332,7 @@ class Choice extends StatefulWidget {
     required this.isSelected,
     required this.isRightAnswer,
     required this.userTapSubmit,
+    required this.overallSubject,
   }) : super(key: key);
 
   @override
@@ -294,19 +342,73 @@ class Choice extends StatefulWidget {
 class _ChoiceState extends State<Choice> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isSelected) {
+    Color color = getTextColor(widget.overallSubject)[1];
+    print("user tap submit: ${widget.userTapSubmit}");
+    print("is selected: ${widget.isSelected}");
+    print("is right answer: ${widget.isRightAnswer}");
+
+
+    if (widget.userTapSubmit && widget.isSelected && widget.isRightAnswer) {
       return Container(
         width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         child: ElevatedButton(
           onPressed: () {
             widget.callback(widget.answer);
           },
-          child: Text(widget.answer),
+          style:
+          ElevatedButton.styleFrom(backgroundColor: Colors.green.shade500),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (widget.userTapSubmit && widget.isSelected) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        child: ElevatedButton(
+          onPressed: () {
+            widget.callback(widget.answer);
+          },
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.red.shade500),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (widget.isSelected) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        child: ElevatedButton(
+          onPressed: () {
+            widget.callback(widget.answer);
+          },
+          style: ElevatedButton.styleFrom(backgroundColor: color),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.answer,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
         ),
       );
     } else {
       if (widget.isSelected && widget.isRightAnswer) {
-        print(widget.isSelected && widget.isRightAnswer);
         return Container(
           width: double.infinity,
           child: ElevatedButton(
@@ -318,22 +420,119 @@ class _ChoiceState extends State<Choice> {
           ),
         );
       } else {
+        if (widget.userTapSubmit && widget.isRightAnswer) {
+          return Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(4),
+            child: ElevatedButton(
+              onPressed: () {
+                widget.callback(widget.answer);
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.answer,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          );
+        }
         return Container(
           width: double.infinity,
+          padding: EdgeInsets.all(4),
           child: OutlinedButton(
             style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 2, color: Theme.of(context).primaryColor),
+              side: BorderSide(width: 2, color: color),
             ),
             onPressed: () {
+              if (widget.userTapSubmit) {
+                return;
+              }
               widget.callback(widget.answer);
             },
-            child: Text(widget.answer),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                widget.answer,
+                style: TextStyle(color: color, fontSize: 20),
+              ),
+            ),
           ),
         );
       }
     }
   }
 }
+
+// class Choice extends StatefulWidget {
+//   Function(String) callback;
+//
+//   String answer;
+//
+//   bool isSelected = false;
+//
+//   bool isRightAnswer;
+//
+//   bool userTapSubmit;
+//
+//   Choice({
+//     Key? key,
+//     required this.answer,
+//     required this.callback,
+//     required this.isSelected,
+//     required this.isRightAnswer,
+//     required this.userTapSubmit,
+//   }) : super(key: key);
+//
+//   @override
+//   State<Choice> createState() => _ChoiceState();
+// }
+//
+// class _ChoiceState extends State<Choice> {
+//   @override
+//   Widget build(BuildContext context) {
+//     if (widget.isSelected) {
+//       return Container(
+//         width: double.infinity,
+//         child: ElevatedButton(
+//           onPressed: () {
+//             widget.callback(widget.answer);
+//           },
+//           child: Text(widget.answer),
+//         ),
+//       );
+//     } else {
+//       if (widget.isSelected && widget.isRightAnswer) {
+//         print(widget.isSelected && widget.isRightAnswer);
+//         return Container(
+//           width: double.infinity,
+//           child: ElevatedButton(
+//             onPressed: () {
+//               widget.callback(widget.answer);
+//             },
+//             style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+//             child: Text(widget.answer),
+//           ),
+//         );
+//       } else {
+//         return Container(
+//           width: double.infinity,
+//           child: OutlinedButton(
+//             style: OutlinedButton.styleFrom(
+//               side: BorderSide(width: 2, color: Theme.of(context).primaryColor),
+//             ),
+//             onPressed: () {
+//               widget.callback(widget.answer);
+//             },
+//             child: Text(widget.answer),
+//           ),
+//         );
+//       }
+//     }
+//   }
+// }
 //
 // class FinishWidget extends StatefulWidget {
 //   int percent;

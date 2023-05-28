@@ -6,9 +6,17 @@ import 'package:mobile_v11/screens/leitner/selectCourseDialog.dart';
 import 'package:mobile_v11/services/pb/leitnerQuestion.pbgrpc.dart';
 
 import '../../globals.dart';
+import '../../layout.dart';
+import '../../colors.dart';
 
 class LeitnerScreen extends StatefulWidget {
-  const LeitnerScreen({Key? key}) : super(key: key);
+  final String myCourseId;
+
+  final String overallSubject;
+
+  const LeitnerScreen(
+      {Key? key, required this.myCourseId, required this.overallSubject})
+      : super(key: key);
 
   @override
   State<LeitnerScreen> createState() => _LeitnerScreenState();
@@ -21,12 +29,7 @@ class _LeitnerScreenState extends State<LeitnerScreen> {
   bool courseSelectionDialog = false;
   String selectedCourseId = "";
   bool loading = true;
-  // int stage = 0;
-  // int currentQuestionIndex = 0;
-  // int qLength = 0;
-  //
-  // bool showFinishWidget = false;
-  // bool showGuide=true;
+
   List<GetLeitnerQuestionsDto> questions = [];
 
   final box = GetStorage();
@@ -44,10 +47,12 @@ class _LeitnerScreenState extends State<LeitnerScreen> {
     super.initState();
 
     GetLeitnerQuestionsRequest req = GetLeitnerQuestionsRequest();
+    req.courseId = widget.myCourseId;
     _stub.get(req).then((p0) => {
-          setState((){
+          print(p0),
+          setState(() {
             questions = p0.data;
-            loading=false;
+            loading = false;
           })
         });
   }
@@ -60,16 +65,17 @@ class _LeitnerScreenState extends State<LeitnerScreen> {
     });
     addQuestions();
   }
-  emptyQuestionCallback(){
+
+  emptyQuestionCallback() {
     setState(() {
-      questions=[];
+      questions = [];
     });
   }
 
   addQuestions() {
     AddLeitnerQuestionsRequest req = AddLeitnerQuestionsRequest();
-    req.myCourseId = selectedCourseId;
-    req.number=20;
+    req.myCourseId = widget.myCourseId;
+    req.number = 20;
 
     _stub.addQuestions(req).then((p0) => {
           questions = p0.data,
@@ -81,71 +87,78 @@ class _LeitnerScreenState extends State<LeitnerScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    if(loading){
+    if (loading) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: getAppBar(context, ""),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
-    if(questions.isNotEmpty){
+    if (questions.isNotEmpty) {
       return Scaffold(
-        appBar: AppBar(),
-        body:Container(
+        appBar: getAppBar(context, ""),
+        body: Container(
             padding: EdgeInsets.all(8),
-            child: LeitnerQuestionsWidget(leitnerQuestions: questions,emptyQuestionCallback: emptyQuestionCallback,)),
+            child: LeitnerQuestionsWidget(
+              leitnerQuestions: questions,
+              emptyQuestionCallback: emptyQuestionCallback, overallSubject: widget.overallSubject,
+            )),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(),
-      body: courseSelectionDialog
-          ? Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              child: SelectCourseDialog(
-                callback: callback,
-              ),
-            )
-          : Container(
-              padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "همه سوالات مرور شده",
-                              style: TextStyle(fontSize: 24),
-                            ),
-                          ],
-                        ),
+      appBar: getAppBar(context, ""),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "همه سوالات مرور شده",
+                        style: TextStyle(fontSize: 24),
                       ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 52,
-                      child: ElevatedButton(
-                        style: const ButtonStyle(),
-                        onPressed: () {
-                          setState(() {
-                            courseSelectionDialog=true;
-                          });
-                        },
-                        child: const Text("اضافه کردن سوالات"),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
+
+              SizedBox(
+                height: 52,
+                width: double.infinity,
+                child: InkWell(
+                  onTap: () {
+                    addQuestions();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: getColor(widget.overallSubject),
+                        stops: const [0, 1],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        " درس جدید",
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_v11/random.dart';
+import 'package:mobile_v11/colors.dart';
 import 'package:mobile_v11/services/pb/course.pb.dart';
 
 class FullPageCourseCard extends StatefulWidget {

@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
 
+import '../../globals.dart';
 import '../../services/pb/auth.pbgrpc.dart';
 
 
@@ -27,6 +28,18 @@ class _NewRegisterScreenState extends State<NewRegisterScreen> {
 
   late UserRegisterResp  registerResp;
   final box=GetStorage();
+
+  @override
+  void initState() {
+    _channel = ClientChannel(
+        host,
+        port: port,
+        options:
+        const ChannelOptions(credentials: ChannelCredentials.insecure()));
+
+    _stub = AuthServiceClient(_channel);
+    super.initState();
+  }
 
   onRegister(){
     UserRegisterReq req=UserRegisterReq();
@@ -63,8 +76,7 @@ class _NewRegisterScreenState extends State<NewRegisterScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 8),
             Padding(
@@ -134,7 +146,7 @@ class _NewRegisterScreenState extends State<NewRegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
               child: TextFormField(
-                controller: phoneNumberController,
+                controller: passwordController,
                 decoration:  InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
@@ -154,7 +166,9 @@ class _NewRegisterScreenState extends State<NewRegisterScreen> {
               height: 52,
               width: double.infinity,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  onRegister();
+                },
                 child: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(

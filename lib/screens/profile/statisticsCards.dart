@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../random.dart';
+import '../../colors.dart';
 import '../../services/pb/user.pb.dart';
 
 Widget getCoinCard(User u) {
@@ -50,13 +50,13 @@ Widget getXPCard(User u) {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         // FaIcon(FontAwesomeIcons.,color: Colors.white,),
-        Text(
+        const Text(
           "xp",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         Text(
           "${u.xp}",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: const TextStyle(color: Colors.white, fontSize: 20),
         )
       ],
     ),
@@ -79,18 +79,18 @@ Widget getSteakCard(User u) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        FaIcon(
+        const FaIcon(
           FontAwesomeIcons.fireFlameCurved,
           color: Colors.white,
         ),
         u.usersStreaks.isEmpty
-            ? Text(
-                "12",
+            ? const Text(
+                "0",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               )
             : Text(
                 "${u.usersStreaks[0].streak.count}",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: const TextStyle(color: Colors.white, fontSize: 20),
               )
       ],
     ),
@@ -119,7 +119,7 @@ Widget getFinishedLessonCard(User u) {
         ),
         Text(
           "${u.finishedLessons}",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
       ],
     ),

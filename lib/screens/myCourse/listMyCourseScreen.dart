@@ -56,9 +56,7 @@ class _ListMyCourseScreenState extends State<ListMyCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (box.read("accessToken") == null) {
-      return const AuthScreen();
-    }
+
     if (loadingScreen) {
       return Scaffold(
         appBar: getAppBar(context, ""),

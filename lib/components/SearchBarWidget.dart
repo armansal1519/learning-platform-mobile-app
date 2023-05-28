@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({Key? key}) : super(key: key);
+  final Function callback;
+
+  const SearchBarWidget({Key? key , required this.callback}) : super(key: key);
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 48,
+      padding: const EdgeInsets.all(8),
+      height: 64,
       child: TextFormField(
         controller: _searchController,
         style: TextStyle(color: Theme.of(context).primaryColorDark),
@@ -30,7 +33,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             onTap: () {
               print("search");
             },
-            child: Icon(
+            child: const Icon(
               Icons.search,
               size: 34,
               color: Colors.grey,
@@ -39,7 +42,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
           floatingLabelBehavior: FloatingLabelBehavior.never,
           hintText: 'درس مورد نظرتو پیدا کن',
-          contentPadding: const EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(18),
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -52,7 +55,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           fillColor: Colors.white,
         ),
         onChanged: (value) {
-          // Perform search functionality here
+          widget.callback(_searchController.text);
         },
       ),
     );

@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
 import 'package:mobile_v11/components/unitWidget.dart';
 import 'package:mobile_v11/globals.dart';
 
-import '../../random.dart';
+import '../../colors.dart';
 import '../../services/pb/course.pbgrpc.dart';
 
 class SingleCourseScreen extends StatefulWidget {
@@ -23,14 +26,25 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
   late CourseServiceClient _stub;
   Course? course;
   final box = GetStorage();
+  late Widget btnText;
+
 
   // bool? isAuth ;
+
+  setDefaultBtnText() {
+    setState(() {
+      btnText = const Text(
+        "گرفتن درس",
+        style: TextStyle(fontSize: 22, color: Colors.white),
+      );
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     notNullId = widget.id!;
-
+    setDefaultBtnText();
     _channel = ClientChannel(
       host,
       port: port,
@@ -52,11 +66,11 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
     _stub.get(request).then((res) => {
           setState(() {
             course = res;
-          })
+          }),
         });
   }
 
-  void onClickAdd() {
+  void  onClickAdd() async{
     if (box.read("accessToken") == null) {
       GoRouter.of(context).go('/course');
       return;
@@ -65,9 +79,39 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
     TakeCourseReuest req = TakeCourseReuest();
     req.courseId = notNullId;
 
-    _stub
-        .takeCourse(req)
-        .then((resp) => {print(resp), GoRouter.of(context).go('/mycourses')});
+    try {
+      // _stub.takeCourse(req).then(
+      //       (resp) => {
+      //         print("resp ${resp}"),
+      //         GoRouter.of(context).go('/mycourses'),
+      //       },
+      //     );
+      SearchCourseResponse resp= await _stub.takeCourse(req);
+    } on GrpcError catch (e) {
+      print("in error");
+      if (e.message == "need_more_coin") {
+        setState(() {
+          btnText = Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              FaIcon(
+                FontAwesomeIcons.coins,
+                size: 22,
+                color: Colors.white,
+              ),
+              SizedBox(width: 4,),
+              Text(
+                "کافی نداری",
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+            ],
+          );
+        });
+        Timer(const Duration(seconds: 2), () {
+          setDefaultBtnText();
+        });
+      }
+    }
   }
 
   @override
@@ -95,10 +139,27 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
-                          course!.images[0],
-                          height: 240,
-                        ),
+                        course!.images.isNotEmpty
+                            ? Image.network(
+                                course!.images[0],
+                                height: 240,
+                              )
+                            : Container(
+                                height: 240,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: getColor(course.overallSubject),
+                                    stops: const [0, 1],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                ),
+                                child: Center(
+                                  child: getIcon(course.overallSubject, 110),
+                                ),
+                              ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -136,7 +197,10 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
                           child: Column(
                             children: [
                               for (var unit in course!.units)
-                                UnitWidget(unit: unit,overallSubject: course.overallSubject,)
+                                UnitWidget(
+                                  unit: unit,
+                                  overallSubject: course.overallSubject,
+                                )
                             ],
                           ),
                         )
@@ -145,14 +209,16 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               SizedBox(
                 height: 52,
                 width: double.infinity,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    onClickAdd();
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -163,12 +229,7 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
                       ),
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                     ),
-                    child: const Center(
-                      child: Text(
-                        "گرفتن درس",
-                        style: TextStyle(fontSize: 22, color: Colors.white),
-                      ),
-                    ),
+                    child: Center(child: btnText),
                   ),
                 ),
               ),

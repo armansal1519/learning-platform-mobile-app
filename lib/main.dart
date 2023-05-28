@@ -87,12 +87,12 @@ class ScaffoldWithNavBar extends StatelessWidget {
             ),
             title: const Text("پروفایل"),
           ),
-          SalomonBottomBarItem(
-            icon: const FaIcon(
-                FontAwesomeIcons.trophy
-            ),
-            title: const Text("چالش ها"),
-          ),
+          // SalomonBottomBarItem(
+          //   icon: const FaIcon(
+          //       FontAwesomeIcons.trophy
+          //   ),
+          //   title: const Text("چالش ها"),
+          // ),
           // SalomonBottomBarItem(
           //   icon: const Icon(Icons.newspaper),
           //   title: const Text("اخبار"),

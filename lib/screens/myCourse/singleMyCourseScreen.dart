@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grpc/grpc.dart';
 import 'package:mobile_v11/globals.dart';
-import 'package:mobile_v11/random.dart';
+import 'package:mobile_v11/colors.dart';
 import 'package:mobile_v11/services/pb/myCourse.pbgrpc.dart';
 
 import '../../components/myUnitWidget.dart';
@@ -85,9 +86,26 @@ class _SingleMyCourseScreenState extends State<SingleMyCourseScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
-                          myCourse!.course.images[0],
+                        myCourse.course!.images.isNotEmpty
+                            ? Image.network(
+                          myCourse.course!.images[0],
                           height: 240,
+                        )
+                            : Container(
+                          height: 240,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: getColor(myCourse.course.overallSubject),
+                              stops: const [0, 1],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(15)),
+                          ),
+                          child: Center(
+                            child: getIcon(myCourse.course.overallSubject, 110),
+                          ),
                         ),
                         const SizedBox(
                           height: 8,
@@ -109,15 +127,15 @@ class _SingleMyCourseScreenState extends State<SingleMyCourseScreen> {
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          children: const [
-                            Text(
-                              "Units:",
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: const [
+                        //     Text(
+                        //       "Units:",
+                        //       style: TextStyle(
+                        //           fontSize: 22, fontWeight: FontWeight.bold),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -158,7 +176,11 @@ class _SingleMyCourseScreenState extends State<SingleMyCourseScreen> {
                 height: 52,
                 width: double.infinity,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    //leitner
+                    GoRouter.of(context).go('/mycourses/leitner/${myCourse.id}/${myCourse.course.overallSubject}');
+
+                  },
                   child: Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(

@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_v11/services/pb/myCourse.pb.dart';
 
-import '../random.dart';
+import '../colors.dart';
 
 class MyCourseListItem extends StatelessWidget {
   final MyCourse myCourse;

@@ -22,6 +22,7 @@ class _ListCourseWithSearchState extends State<ListCourseWithSearch> {
   late FirstServiceClient _firstStub;
   late List<Course> courses = [];
   final box = GetStorage();
+  bool firstLoading=true;
 
   @override
   void initState() {
@@ -46,13 +47,27 @@ class _ListCourseWithSearchState extends State<ListCourseWithSearch> {
     _stub.search(request).then((res) => {
           setState(() {
             courses = res.courses;
+            firstLoading=false;
           })
         });
   }
 
+  searchCourses(String sp){
+    SearchCourseRequest request = SearchCourseRequest();
+    request.limit = 20;
+    request.offset = 0;
+    request.orderBy = "";
+    request.searchPhrase = sp;
+    _stub.search(request).then((res) => {
+      setState(() {
+        courses = res.courses;
+      })
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (courses.isEmpty) {
+    if (firstLoading) {
       return Scaffold(
         appBar: getAppBar(context, ""),
         body: const Center(child: CircularProgressIndicator()),
@@ -66,10 +81,12 @@ class _ListCourseWithSearchState extends State<ListCourseWithSearch> {
       ),
       body: ListView(
         children: [
-          const SearchBarWidget(),
-          SizedBox(height: 16,),
+          SearchBarWidget(callback: searchCourses),
+          const SizedBox(height: 16,),
 
-          GridView.count(
+          courses.isEmpty?
+          Center(child: Text("درسی پیدا نشد"),)
+          :GridView.count(
             shrinkWrap: true,
             primary: false,
             padding: const EdgeInsets.all(8),
@@ -81,8 +98,8 @@ class _ListCourseWithSearchState extends State<ListCourseWithSearch> {
               // CourseWidget(course: courses[0],),
               // CourseWidget(course: courses[1]),
               // CourseWidget(course: courses[2]),
-              for (var i in [1, 2, 3, 4, 5, 6, 7])
-                NewCourseCardWidget(course: courses[0])
+              for (var c in courses)
+                NewCourseCardWidget(course: c)
             ],
           ),
         ],

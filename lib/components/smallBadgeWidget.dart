@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../random.dart';
+import '../colors.dart';
 
 class SmallBadgeWidget extends StatelessWidget {
   const SmallBadgeWidget({Key? key}) : super(key: key);

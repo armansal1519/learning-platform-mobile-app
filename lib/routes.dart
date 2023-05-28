@@ -110,13 +110,15 @@ List<RouteBase> getRoutes() {
         /// and the application shell.
 
         GoRoute(
-          path: 'leitner',
+          path: 'leitner/:mycourseid/:overall_subject',
           // builder: (BuildContext context, GoRouterState state) {
           //   return const DetailsScreen(label: 'A');
           // },
           pageBuilder: (context, state) {
             return CustomTransitionPage(
-              child: const LeitnerScreen(),
+              child: LeitnerScreen(myCourseId: state.params["mycourseid"]!,
+                  overallSubject: state.params["overall_subject"]!
+              ),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
