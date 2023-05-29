@@ -12,7 +12,7 @@ import '../../colors.dart';
 import '../../services/pb/course.pbgrpc.dart';
 
 class SingleCourseScreen extends StatefulWidget {
-  String? id;
+  String?  id;
 
   SingleCourseScreen({Key? key, required this.id}) : super(key: key);
 
@@ -86,14 +86,17 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
       //         GoRouter.of(context).go('/mycourses'),
       //       },
       //     );
-      SearchCourseResponse resp= await _stub.takeCourse(req);
+      await _stub.takeCourse(req).then((p0) => {
+      GoRouter.of(context).go('/mycourses')
+
+      });
     } on GrpcError catch (e) {
       print("in error");
       if (e.message == "need_more_coin") {
         setState(() {
-          btnText = Row(
+          btnText = const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               FaIcon(
                 FontAwesomeIcons.coins,
                 size: 22,
@@ -102,6 +105,22 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
               SizedBox(width: 4,),
               Text(
                 "کافی نداری",
+                style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+            ],
+          );
+        });
+        Timer(const Duration(seconds: 2), () {
+          setDefaultBtnText();
+        });
+      }else if (e.message == "you_already_take_this_course"){
+        setState(() {
+          btnText = const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Text(
+                "قبلا این درس رو گرفتی",
                 style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ],
@@ -180,8 +199,8 @@ class _SingleCourseScreenState extends State<SingleCourseScreen> {
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Text(
                               "سرفصل ها:",
                               style: TextStyle(
